@@ -1,20 +1,19 @@
 <?php
 
-namespace Tests\Feature\Models\User;
+namespace Tests\Unit\Models\User;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
     public function testRequest(): void
     {
-        $user = User::register(
+        $user = User::testRegister(
             $name = 'name',
             $email = 'email',
-            $password = 'password'
+            $password = 'password',
+            $token = 'token',
         );
 
         self::assertNotEmpty($user);
@@ -31,7 +30,7 @@ class RegisterTest extends TestCase
 
     public function testVerify(): void
     {
-        $user = User::register('name', 'email1', 'password');
+        $user = User::testRegister('name', 'email1', 'password', 'token1');
 
         $user->verify();
 
@@ -41,7 +40,7 @@ class RegisterTest extends TestCase
 
     public function testAlreadyVerified(): void
     {
-        $user = User::register('name', 'email2', 'password');
+        $user = User::testRegister('name', 'email2', 'password', 'token2');
 
         $user->verify();
 
