@@ -1,19 +1,22 @@
 <?php
 
-namespace Tests\Unit\Models\User;
+namespace Tests\Feature\Models\User;
 
 use App\Models\User;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
+    /**
+     * @group Register
+     * @return void
+     */
     public function testRequest(): void
     {
-        $user = User::testRegister(
+        $user = User::register(
             $name = 'name',
             $email = 'email',
             $password = 'password',
-            $token = 'token',
         );
 
         self::assertNotEmpty($user);
@@ -30,7 +33,7 @@ class RegisterTest extends TestCase
 
     public function testVerify(): void
     {
-        $user = User::testRegister('name', 'email1', 'password', 'token1');
+        $user = User::register('name', 'email1', 'password');
 
         $user->verify();
 
@@ -40,7 +43,7 @@ class RegisterTest extends TestCase
 
     public function testAlreadyVerified(): void
     {
-        $user = User::testRegister('name', 'email2', 'password', 'token2');
+        $user = User::register('name', 'email2', 'password');
 
         $user->verify();
 

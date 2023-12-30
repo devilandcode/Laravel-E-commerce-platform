@@ -76,6 +76,16 @@ class User extends Authenticatable
         ]);
     }
 
+    public static function testRegister(string $name, string $email, string $password, string $token): self
+    {
+        return static::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+            'verify_token' => $token,
+            'status' => self::STATUS_WAIT,
+        ]);
+    }
 
     public static function new($name, $email): self
     {
