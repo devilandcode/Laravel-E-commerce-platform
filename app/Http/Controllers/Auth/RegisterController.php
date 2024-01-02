@@ -34,7 +34,7 @@ class RegisterController extends Controller
             'status' => User::STATUS_WAIT
         ]);
 
-        Mail::to($user->email)->send(new VerifyMail($user));
+//        dd(Mail::to($user->email)->send(new VerifyMail($user)));
         event(new Registered($user));
 
         return redirect()->route('login')
