@@ -29,7 +29,7 @@
                                 <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                             </li>
                             @guest
-                                <li class="nav-item">
+                                <li class="nav-item d-flex">
                                     <a class="nav-link" href="{{ route('login') }}">Login</a>
                                     <a class="nav-link" href="{{ route('register') }}">Register</a>
                                 </li>

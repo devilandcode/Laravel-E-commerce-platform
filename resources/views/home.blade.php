@@ -1,7 +1,9 @@
+@php use Diglactic\Breadcrumbs\Breadcrumbs; @endphp
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
+        {{ Breadcrumbs::render('home') }}
         <div class="card card-default mb-3">
             <div class="card-header">
                 All Categories
