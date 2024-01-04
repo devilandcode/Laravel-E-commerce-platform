@@ -14,7 +14,6 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::orderByDesc('id', 'desc')->paginate(20);
-
         return view('admin.users.index', compact('users'));
     }
 
@@ -40,32 +39,29 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        $statuses = [
-          User::STATUS_WAIT => 'Waiting',
-          User::STATUS_ACTIVE => 'Active',
-        ];
-
-        return view('admin.users.edit', compact('user', 'statuses'));
+        return view('admin.users.edit', compact('user'));
     }
 
     public function update(UpdateRequest $request, User $user)
     {
         $user->update($request->only(['name', 'email', 'status']));
-
         return redirect()->route('admin.users.show', $user);
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-
         return redirect()->route('admin.users.index');
     }
 
-//    public function verify(User $user)
-//    {
-//        $this->register->verify($user->id);
-//
-//        return redirect()->route('admin.users.show', $user);
-//    }
+    public function verify(Request $request)
+    {
+        $user = json_decode($request->input('user'));
+        $user = User::findOrFail($user->id);
+
+        $user->status = User::STATUS_ACTIVE;
+        $user->update();
+
+        return redirect()->route('admin.users.show', $user);
+    }
 }

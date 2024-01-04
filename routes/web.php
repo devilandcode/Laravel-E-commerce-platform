@@ -12,7 +12,6 @@ Route::get('/', [HomeController::class,'index'])->name('home');
 Auth::routes();
 
 Route::get('/verify/{token}', [RegisterController::class, 'verify'])->name('register.verify');
-
 Route::group(
     [
         'prefix' => 'admin',
@@ -23,6 +22,7 @@ Route::group(
 
         Route::get('/', [AdminController::class,'index'])->name('home');
         Route::resource('users', UsersController::class);
+        Route::post('users/verify', [UsersController::class, 'verify'])->name('users.verify');
 
     }
 );
