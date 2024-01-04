@@ -4,16 +4,17 @@
     @include('admin.users._nav')
 
     <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary mr-1">Edit</a>
+        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary me-3">Edit</a>
 
         @if ($user->isWait())
-            <form method="POST" action="{{ route('admin.users.verify', $user) }}" class="mr-1">
+            <form method="POST" action="{{ route('admin.users.verify') }}" class="me-3">
                 @csrf
+                <input type="hidden" name="user" value="{{ $user }}">
                 <button class="btn btn-success">Verify</button>
             </form>
         @endif
 
-        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="mr-1">
+        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="me-3">
             @csrf
             @method('DELETE')
             <button class="btn btn-danger">Delete</button>

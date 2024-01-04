@@ -34,7 +34,7 @@ class RegisterController extends Controller
             'status' => User::STATUS_WAIT
         ]);
 
-//        dd(Mail::to($user->email)->send(new VerifyMail($user)));
+        Mail::to($user->email)->send(new VerifyMail($user));
         event(new Registered($user));
 
         return redirect()->route('login')
@@ -48,16 +48,13 @@ class RegisterController extends Controller
                 ->with('error', 'Sorry your link cannot be identified.');
         }
 
-        if ($user->status !== User::STATUS_WAIT) {
+        try {
+            $user->verify();
             return redirect()->route('login')
-                ->with('error', 'Your email is already verified');
+                ->with('success', 'Your email is verified. You can now login');
+        } catch (\DomainException $e) {
+            return redirect()->route('login')
+                ->with('error', $e->getMessage());
         }
-
-        $user->status = User::STATUS_ACTIVE;
-        $user->verify_token = null;
-        $user->save();
-
-        return redirect()->route('login')
-            ->with('success', 'Your email is verified. You can now login');
     }
 }

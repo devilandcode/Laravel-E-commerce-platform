@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class Admin extends TestCase
 {
-   
+
     public function testCreateUser(): void
     {
         $user = User::new(

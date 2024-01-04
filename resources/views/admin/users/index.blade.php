@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        {{ Breadcrumbs::render('admin.users.index') }}
         @include('admin.users._nav')
 
         <p><a href="{{ route('admin.users.create') }}" class="btn btn-success">Add User</a></p>
