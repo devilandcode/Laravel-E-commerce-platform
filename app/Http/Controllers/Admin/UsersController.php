@@ -6,10 +6,14 @@ use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\Auth\RegisterService;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    public function __construct(private RegisterService $service)
+    {
+    }
 
     public function index()
     {
@@ -57,10 +61,8 @@ class UsersController extends Controller
     public function verify(Request $request)
     {
         $user = json_decode($request->input('user'));
-        $user = User::findOrFail($user->id);
 
-        $user->status = User::STATUS_ACTIVE;
-        $user->update();
+        $this->service->verify($user->id);
 
         return redirect()->route('admin.users.show', $user);
     }

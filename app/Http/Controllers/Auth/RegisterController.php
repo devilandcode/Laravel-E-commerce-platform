@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
 use App\Mail\Auth\VerifyMail;
 use App\Models\User;
+use App\Services\Auth\RegisterService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ class RegisterController extends Controller
 {
 
 
-    public function __construct()
+    public function __construct(private RegisterService $service)
     {
         $this->middleware('guest');
     }
@@ -26,16 +27,7 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
-            'verify_token' => Str::random(),
-            'status' => User::STATUS_WAIT
-        ]);
-
-        Mail::to($user->email)->send(new VerifyMail($user));
-        event(new Registered($user));
+        $this->service->register($request);
 
         return redirect()->route('login')
             ->with('success', 'Check your Email and click on the link to verify');
@@ -49,7 +41,7 @@ class RegisterController extends Controller
         }
 
         try {
-            $user->verify();
+            $this->service->verify($user->id);
             return redirect()->route('login')
                 ->with('success', 'Your email is verified. You can now login');
         } catch (\DomainException $e) {
