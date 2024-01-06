@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,7 +52,7 @@ class User extends Authenticatable
     public const STATUS_ACTIVE = 'Active';
 
     protected $fillable = [
-        'name', 'email', 'password','verify_token', 'status'
+        'name', 'email', 'password','verify_token', 'status', 'email_verified_at'
     ];
 
     protected $hidden = [
@@ -104,6 +105,7 @@ class User extends Authenticatable
 
         $this->update([
             'status' => self::STATUS_ACTIVE,
+            'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'verify_token' => null,
         ]);
     }
