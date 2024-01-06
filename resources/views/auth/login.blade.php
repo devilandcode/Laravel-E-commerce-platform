@@ -66,6 +66,12 @@
                                 </a>
                             </div>
                         </div>
+                        @if (session('success'))
+                            <div class="container alert text-success">{{ session('success') }}</div>
+                        @endif
+                        @if (session('error'))
+                            <div class="container alert text-danger">{{ session('error') }}</div>
+                        @endif
                     </form>
                 </div>
             </div>
