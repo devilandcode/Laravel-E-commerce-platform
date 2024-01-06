@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render() }}
+
     @include('admin.users._nav')
 
     <div class="d-flex flex-row mb-3">
@@ -9,7 +11,7 @@
         @if ($user->isWait())
             <form method="POST" action="{{ route('admin.users.verify') }}" class="me-3">
                 @csrf
-                <input type="hidden" name="user" value="{{ $user }}">
+                <input type="hidden" name="id" value="{{ $user->id }}">
                 <button class="btn btn-success">Verify</button>
             </form>
         @endif

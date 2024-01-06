@@ -1,0 +1,47 @@
+version: '2'
+services:
+    nginx:
+        build:
+            context: ./
+            dockerfile: docker/nginx.docker
+        volumes:
+            - ./:/var/www
+        ports:
+            - "8080:80"
+        links:
+            - php-fpm
+    php-fpm:
+        build:
+            context: ./
+            dockerfile: docker/php-fpm.docker
+        volumes:
+            - ./:/var/www
+        links:
+            - mysql
+            - redis
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=mysql"
+            - "REDIS_PORT=6379"
+            - "REDIS_HOST=redis"
+    mysql:
+        image: mysql:5.7
+        volumes:
+            - ./storage/docker/mysql:/var/lib/mysql
+        environment:
+            - "MYSQL_ROOT_PASSWORD=root"
+            - "MYSQL_USER=app"
+            - "MYSQL_PASSWORD=secret"
+            - "MYSQL_DATABASE=app"
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+    redis:
+        image: 'redis:alpine'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'

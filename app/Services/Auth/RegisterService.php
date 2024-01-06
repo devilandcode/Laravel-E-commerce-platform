@@ -11,9 +11,11 @@ use Illuminate\Contracts\Mail\Mailer as MailerInterface;
 
 class RegisterService
 {
-    public function __construct(
+    public function __construct
+    (
         private MailerInterface $mailer,
-        private DispatcherInterface $dispatcher )
+        private DispatcherInterface $dispatcher
+    )
     {
     }
     public function register(RegisterRequest $request): void
@@ -28,10 +30,12 @@ class RegisterService
         $this->dispatcher->dispatch(new Registered($user));
     }
 
-    public function verify($id): void
+    public function verify($id): User
     {
         /** @var User $user */
         $user = User::findOrFail($id);
         $user->verify();
+
+        return $user;
     }
 }
