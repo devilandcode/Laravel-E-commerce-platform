@@ -60,9 +60,9 @@ class UsersController extends Controller
 
     public function verify(Request $request)
     {
-        $user = json_decode($request->input('user'));
+        $id = $request->post('id');
 
-        $this->service->verify($user->id);
+        $user = $this->service->verify($id);
 
         return redirect()->route('admin.users.show', $user);
     }
