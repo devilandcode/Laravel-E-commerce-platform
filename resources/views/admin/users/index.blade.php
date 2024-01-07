@@ -100,8 +100,9 @@
 
             </tbody>
         </table>
-
-        {{ $users->links() }}
+        <div class="container">
+            {{ $users->links() }}
+        </div>
     </div>
 
 @endsection
