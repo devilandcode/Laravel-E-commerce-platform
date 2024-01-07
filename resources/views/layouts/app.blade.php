@@ -40,8 +40,12 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('admin.home') }}">Admin</a></li>
-                                    <li><a class="dropdown-item" href="#">Account</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('account.home') }}">Account</a></li>
+                                    <li><form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button class="dropdown-item" type="submit">Logout</button>
+                                    </form></li>
+
                                 </ul>
                             </li>
                             @endguest
