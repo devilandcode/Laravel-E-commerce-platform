@@ -3,14 +3,12 @@
 namespace Tests\Feature\Models\User;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-    /**
-     * @group Register
-     * @return void
-     */
+    use DatabaseTransactions;
     public function testRequest(): void
     {
         $user = User::register(
@@ -29,11 +27,12 @@ class RegisterTest extends TestCase
 
         self::assertTrue($user->isWait());
         self::assertFalse($user->isActive());
+        self::assertFalse($user->isAdmin());
     }
 
     public function testVerify(): void
     {
-        $user = User::register('name', 'email1', 'password');
+        $user = User::register('name', 'email', 'password');
 
         $user->verify();
 
@@ -43,7 +42,7 @@ class RegisterTest extends TestCase
 
     public function testAlreadyVerified(): void
     {
-        $user = User::register('name', 'email2', 'password');
+        $user = User::register('name', 'email', 'password');
 
         $user->verify();
 

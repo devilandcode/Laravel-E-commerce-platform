@@ -33,6 +33,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'verify_token' => $active ? null : Str::uuid() ,
+            'role' => $active ? fake()->randomElement([User::ROLE_USER, User::ROLE_ADMIN]) : User::ROLE_USER,
             'status' => $active ? User::STATUS_ACTIVE : User::STATUS_WAIT,
         ];
 
