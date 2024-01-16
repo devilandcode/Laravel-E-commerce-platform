@@ -17,7 +17,7 @@ Route::group(
     [
         'prefix' => 'admin',
         'as' => 'admin.',
-        'middleware' => ['auth'],
+        'middleware' => ['auth', 'can:admin-panel'],
     ],
     function () {
 
