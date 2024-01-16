@@ -17,6 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $role
  * @property string|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -50,9 +51,12 @@ class User extends Authenticatable
 
     public const STATUS_WAIT = 'Waiting';
     public const STATUS_ACTIVE = 'Active';
+    public const ROLE_USER = 'User';
+    public const ROLE_MODERATOR = 'Moderator';
+    public const ROLE_ADMIN = 'Admin';
 
     protected $fillable = [
-        'name', 'email', 'password', 'verify_token', 'status',
+        'name', 'email', 'password', 'verify_token', 'status', 'role',
     ];
 
     protected $hidden = [
@@ -108,5 +112,21 @@ class User extends Authenticatable
             'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'verify_token' => null,
         ]);
+    }
+
+    public function changeRole($role): void
+    {
+        if (!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)) {
+            throw new \InvalidArgumentException('Undefined role "' . $role . '"');
+        }
+        if ($this->role === $role) {
+            throw new \DomainException('Role is already assigned.');
+        }
+        $this->update(['role' => $role]);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === User::ROLE_ADMIN;
     }
 }
