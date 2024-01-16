@@ -35,9 +35,9 @@
                                 <label for="status" class="col-form-label">Status</label>
                                 <select id="status" class="form-control" name="status">
                                     <option value=""></option>
-                                    {{--                                @foreach ($statuses as $value => $label)--}}
-                                    {{--                                    <option value="{{ $value }}"{{ $value === request('status') ? ' selected' : '' }}>{{ $label }}</option>--}}
-                                    {{--                                @endforeach;--}}
+                                        @foreach ($statuses as $value => $label)
+                                            <option value="{{ $value }}"{{ $value === request('status') ? ' selected' : '' }}>{{ $label }}</option>
+                                        @endforeach;
                                 </select>
                             </div>
                         </div>
@@ -46,9 +46,9 @@
                                 <label for="role" class="col-form-label">Role</label>
                                 <select id="role" class="form-control" name="role">
                                     <option value=""></option>
-                                    {{--                                @foreach ($roles as $value => $label)--}}
-                                    {{--                                    <option value="{{ $value }}"{{ $value === request('role') ? ' selected' : '' }}>{{ $label }}</option>--}}
-                                    {{--                                @endforeach;--}}
+                                        @foreach ($roles as $value => $label)
+                                            <option value="{{ $value }}"{{ $value === request('role') ? ' selected' : '' }}>{{ $label }}</option>
+                                        @endforeach;
                                 </select>
                             </div>
                         </div>
@@ -88,13 +88,13 @@
                             <span class="badge text-bg-success">Active</span>
                         @endif
                     </td>
-                    {{--                <td>--}}
-                    {{--                    @if ($user->isAdmin())--}}
-                    {{--                        <span class="badge badge-danger">Admin</span>--}}
-                    {{--                    @else--}}
-                    {{--                        <span class="badge badge-secondary">User</span>--}}
-                    {{--                    @endif--}}
-                    {{--                </td>--}}
+                        <td>
+                            @if ($user->isAdmin())
+                                <span class="badge text-bg-danger">Admin</span>
+                            @else
+                                <span class="badge text-dark">User</span>
+                            @endif
+                        </td>
                 </tr>
             @endforeach
 
