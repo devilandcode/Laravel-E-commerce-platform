@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('regions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name')->index();
             $table->string('slug');
             $table->integer('parent_id')->nullable()->references('id')->on('regions')->onDelete('CASCADE');
@@ -22,9 +19,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('regions');
