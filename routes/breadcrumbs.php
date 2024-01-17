@@ -65,3 +65,9 @@ Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, User $use
     $trail->push($user->name, route('admin.users.edit', $user));
 });
 
+// Home > admin > regions
+Breadcrumbs::for('admin.regions.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.home');
+    $trail->push('Regions', route('admin.regions.index'));
+});
+

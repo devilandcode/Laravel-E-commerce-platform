@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Adverts\CategoryController;
+use App\Http\Controllers\Admin\RegionController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Account\HomeController as AccountController;
@@ -11,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class,'index'])->name('home');
 
 Auth::routes();
-
 Route::get('/verify/{token}', [RegisterController::class, 'verify'])->name('register.verify');
+
 Route::group(
     [
         'prefix' => 'admin',
@@ -23,8 +25,18 @@ Route::group(
 
         Route::get('/', [AdminController::class, 'index'])->name('home');
         Route::resource('users', UsersController::class);
+        Route::resource('regions', RegionController::class);
         Route::post('users/verify', [UsersController::class, 'verify'])->name('users.verify');
-
+        Route::group(
+            [
+                'prefix' => 'adverts',
+                'as' => 'adverts.',
+                'middleware' => ['auth'],
+            ],
+            function () {
+                Route::resource('categories', CategoryController::class);
+            }
+        );
     }
 );
 
@@ -38,3 +50,5 @@ Route::group(
         Route::get('/', [AccountController::class, 'index'])->name('home');
     }
 );
+
+
