@@ -42,12 +42,12 @@ class LoginTest extends TestCase
     }
 
     /**
-     * @group Error
+     * @group Login
      * @return void
      */
     public function testWait(): void
     {
-        $user = User::factory()->create(['role' => User::STATUS_WAIT]);
+        $user = User::factory()->create(['status' => User::STATUS_WAIT]);
 
 
         $response = $this->post('/login', [
@@ -57,17 +57,17 @@ class LoginTest extends TestCase
 
         $response
             ->assertStatus(302)
-            ->assertRedirect('/login')
+            ->assertRedirect('/')
             ->assertSessionHas('error', 'You need to confirm your account. Please check your email.');
     }
 
     /**
-     * @group Auth
+     * @group Login
      * @return void
      */
     public function testAuthorize(): void
     {
-        $user = User::factory()->create(['role' => User::STATUS_ACTIVE]);
+        $user = User::factory()->create(['status' => User::STATUS_ACTIVE]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
