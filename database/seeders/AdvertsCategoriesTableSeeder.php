@@ -16,10 +16,11 @@ class AdvertsCategoriesTableSeeder extends Seeder
     {
         Category::factory()->count(10)->create()->each(function(Category $category) {
             $counts = [0, random_int(3, 7)];
-            $category->children()->saveMany(Category::factory()->count([array_rand($counts)])->create()->each(function(Category $category) {
+            $category->children()->saveMany(Category::factory()->count($counts[array_rand($counts)])->create()->each(function(Category $category) {
                 $counts = [0, random_int(3, 7)];
-                $category->children()->saveMany(Category::factory()->count([array_rand($counts)])->create());
+                $category->children()->saveMany(Category::factory()->count($counts[array_rand($counts)])->create());
             }));
         });
+
     }
 }
