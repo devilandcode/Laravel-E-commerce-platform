@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Account\PhoneController;
+use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Admin\Adverts\AttributeController;
 use App\Http\Controllers\Admin\Adverts\CategoryController;
 use App\Http\Controllers\Admin\RegionController;
@@ -24,7 +26,6 @@ Route::group(
         'middleware' => ['auth', 'can:admin-panel'],
     ],
     function () {
-
         Route::get('/', [AdminController::class, 'index'])->name('home');
         Route::resource('users', UsersController::class);
         Route::resource('regions', RegionController::class);
@@ -63,6 +64,20 @@ Route::group(
     ],
     function () {
         Route::get('/', [AccountController::class, 'index'])->name('home');
+
+        Route::group(
+            [
+                'prefix' => 'profile',
+                'as' => 'profile.'
+            ],
+            function () {
+            Route::get('/', [ProfileController::class, 'index'])->name('home');
+            Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+            Route::put('/update', [ProfileController::class, 'update'])->name('update');
+            Route::post('/phone', [PhoneController::class, 'request'])->name('phone.request');
+            Route::get('/phone', [PhoneController::class, 'form'])->name('phone');
+            Route::put('/phone', [PhoneController::class, 'verify'])->name('phone.verify');
+        });
     }
 );
 

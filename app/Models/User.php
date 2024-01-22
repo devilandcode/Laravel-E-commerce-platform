@@ -43,6 +43,17 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereVerifyToken($value)
+ * @property string|null $phone
+ * @property bool $phone_verified
+ * @property string|null $phone_verify_token
+ * @property \Illuminate\Support\Carbon|null $phone_verify_token_expire
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneVerified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneVerifyToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneVerifyTokenExpire($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
+ * @property string|null $last_name
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -56,7 +67,7 @@ class User extends Authenticatable
     public const ROLE_ADMIN = 'Admin';
 
     protected $fillable = [
-        'name', 'email', 'password', 'verify_token', 'status', 'role',
+        'name', 'last_name', 'phone', 'email', 'password', 'verify_token', 'status', 'role',
     ];
 
     protected $hidden = [
@@ -128,5 +139,48 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === User::ROLE_ADMIN;
+    }
+
+    public function isPhoneVerified(): bool
+    {
+        return $this->phone_verified;
+    }
+    public function unverifyPhone(): void
+    {
+        $this->phone_verified = false;
+        $this->phone_verify_token = null;
+        $this->phone_verify_token_expire = null;
+        $this->saveOrFail();
+    }
+
+    public function requestPhoneVerification(Carbon $now): string
+    {
+        if (empty($this->phone)) {
+            throw new \DomainException('Phone number is empty.');
+        }
+        if (!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)) {
+            throw new \DomainException('Token is already requested.');
+        }
+        $this->phone_verified = false;
+        $this->phone_verify_token = (string)random_int(10000, 99999);
+        $this->phone_verify_token_expire = $now->copy()->addSeconds(300);
+        $this->saveOrFail();
+
+        return $this->phone_verify_token;
+    }
+
+    public function verifyPhone($token, Carbon $now): void
+    {
+        if ($token !== $this->phone_verify_token) {
+            throw new \DomainException('Incorrect verify token.');
+        }
+        if ($this->phone_verify_token_expire->lt($now)) {
+            throw new \DomainException('Token is expired.');
+        }
+
+        $this->phone_verified = true;
+        $this->phone_verify_token = null;
+        $this->phone_verify_token_expire = null;
+        $this->saveOrFail();
     }
 }
