@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', [HomeController::class,'index'])->name('home');
 
 Auth::routes();
@@ -22,6 +24,8 @@ Auth::routes();
 Route::get('/verify/{token}', [RegisterController::class, 'verify'])->name('register.verify');
 Route::get('/login/phone', [LoginController::class, 'phone'])->name('login.phone');
 Route::post('/login/phone', [LoginController::class, 'verify']);
+
+//Route::get('/ajax/regions', [AjaxRegionController::class, 'get'])->name('ajax.regions');
 
 Route::group(
     [
