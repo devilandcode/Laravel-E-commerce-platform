@@ -71,3 +71,32 @@ Breadcrumbs::for('admin.regions.index', function (BreadcrumbTrail $trail) {
     $trail->push('Regions', route('admin.regions.index'));
 });
 
+// Account
+Breadcrumbs::for('account.home', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Account', route('account.home'));
+});
+
+// Account Adverts
+
+Breadcrumbs::for('account.adverts.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('account.home');
+    $trail->push('Adverts', route('account.adverts.index'));
+});
+
+//Profile
+Breadcrumbs::for('account.profile.home', function (BreadcrumbTrail $trail) {
+    $trail->parent('account.home');
+    $trail->push('Profile', route('account.profile.home'));
+});
+
+Breadcrumbs::for('account.profile.edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('account.profile.home');
+    $trail->push('Edit', route('account.profile.edit'));
+});
+
+Breadcrumbs::for('account.profile.phone', function (BreadcrumbTrail $trail) {
+    $trail->parent('account.profile.home');
+    $trail->push('Phone', route('account.profile.phone'));
+});
+

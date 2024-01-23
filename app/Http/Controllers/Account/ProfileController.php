@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    private $service;
-
-    public function __construct(ProfileService $service)
-    {
-        $this->service = $service;
-    }
+//    private $service;
+//
+//    public function __construct(ProfileService $service)
+//    {
+//        $this->service = $service;
+//    }
 
     public function index()
     {
@@ -31,13 +31,24 @@ class ProfileController extends Controller
         return view('account.profile.edit', compact('user'));
     }
 
-    public function update(ProfileEditRequest $request)
+    public function update(Request $request)
     {
-        try {
-            $this->service->edit(Auth::id(), $request);
-        } catch (\DomainException $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255|regex:/^\d+$/s'
+        ]);
+
+        $user = Auth::user();
+
+        $oldPhone = $user->phone;
+
+        $user->update($validated);
+
+        if ($user->phone !== $oldPhone) {
+            $user->unverifyPhone();
         }
+
         return redirect()->route('account.profile.home');
     }
 }

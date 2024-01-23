@@ -29,5 +29,6 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="APP_URL" value="http://otus-lara.local"/>
+        <env name="SMS_DRIVER" value="array"/>
     </php>
 </phpunit>

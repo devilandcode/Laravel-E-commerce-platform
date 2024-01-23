@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render() }}
+
     @include('account.profile._nav')
 
     <form method="POST" action="{{ route('account.profile.update') }}">
