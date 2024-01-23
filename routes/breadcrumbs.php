@@ -77,6 +77,13 @@ Breadcrumbs::for('account.home', function (BreadcrumbTrail $trail) {
     $trail->push('Account', route('account.home'));
 });
 
+// Account Adverts
+
+Breadcrumbs::for('account.adverts.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('account.home');
+    $trail->push('Adverts', route('account.adverts.index'));
+});
+
 //Profile
 Breadcrumbs::for('account.profile.home', function (BreadcrumbTrail $trail) {
     $trail->parent('account.home');

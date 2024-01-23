@@ -54,6 +54,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneVerifyTokenExpire($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @property string|null $last_name
+ * @property bool $phone_auth
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneAuth($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -136,20 +138,12 @@ class User extends Authenticatable
         $this->update(['role' => $role]);
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->role === User::ROLE_ADMIN;
-    }
-
-    public function isPhoneVerified(): bool
-    {
-        return $this->phone_verified;
-    }
     public function unverifyPhone(): void
     {
         $this->phone_verified = false;
         $this->phone_verify_token = null;
         $this->phone_verify_token_expire = null;
+        $this->phone_auth = false;
         $this->saveOrFail();
     }
 
@@ -182,5 +176,43 @@ class User extends Authenticatable
         $this->phone_verify_token = null;
         $this->phone_verify_token_expire = null;
         $this->saveOrFail();
+    }
+
+    public function enablePhoneAuth(): void
+    {
+        if (empty($this->phone) && !$this->isPhoneVerified()) {
+            throw new \DomainException('Phone number is empty.');
+        }
+        $this->phone_auth = true;
+        $this->saveOrFail();
+    }
+
+    public function disablePhoneAuth(): void
+    {
+        if (empty($this->phone) && !$this->isPhoneVerified()) {
+            throw new \DomainException('Phone number is empty.');
+        }
+        $this->phone_auth = false;
+        $this->saveOrFail();
+    }
+
+    public function hasFilledProfile(): bool
+    {
+        return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
+    }
+
+    public function isPhoneAuthEnabled(): bool
+    {
+        return (bool)$this->phone_auth;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === User::ROLE_ADMIN;
+    }
+
+    public function isPhoneVerified(): bool
+    {
+        return $this->phone_verified;
     }
 }

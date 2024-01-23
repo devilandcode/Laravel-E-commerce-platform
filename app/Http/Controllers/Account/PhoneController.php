@@ -54,10 +54,16 @@ class PhoneController extends Controller
         return redirect()->route('account.profile.home')->with('success', 'Your phone is verified');
     }
 
-//    public function auth()
-//    {
-//        $this->service->toggleAuth(Auth::id());
-//
-//        return redirect()->route('cabinet.profile.home');
-//    }
+    public function auth()
+    {
+        $user = Auth::user();
+
+        if ($user->isPhoneAuthEnabled()) {
+            $user->disablePhoneAuth();
+        } else {
+            $user->enablePhoneAuth();
+        }
+
+        return redirect()->route('account.profile.home');
+    }
 }

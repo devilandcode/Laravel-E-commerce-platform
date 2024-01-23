@@ -4,12 +4,9 @@ namespace App\Services\Sms;
 
 class ArraySender implements SmsSenderInterface
 {
+    private $messages = [];
 
     public function send($number, $text): void
-    {
-        private $messages = [];
-
-        public function send($number, $text): void
     {
         $this->messages[] = [
             'to' => '+' . trim($number, '+'),
@@ -17,9 +14,8 @@ class ArraySender implements SmsSenderInterface
         ];
     }
 
-        public function getMessages(): array
+    public function getMessages(): array
     {
         return $this->messages;
-    }
     }
 }

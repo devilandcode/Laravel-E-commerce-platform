@@ -39,21 +39,23 @@
                 @endif
             </td>
         </tr>
-{{--        @if ($user->phone)--}}
-{{--            <tr>--}}
-{{--                <th>Two Factor Auth</th>--}}
-{{--                <td>--}}
-{{--                    <form method="POST" action="{{ route('account.profile.phone.auth') }}">--}}
-{{--                        @csrf--}}
-{{--                        @if ($user->isPhoneAuthEnabled())--}}
-{{--                            <button type="submit" class="btn btn-sm btn-success">On</button>--}}
-{{--                        @else--}}
-{{--                            <button type="submit" class="btn btn-sm btn-danger">Off</button>--}}
-{{--                        @endif--}}
-{{--                    </form>--}}
-{{--                </td>--}}
-{{--            </tr>--}}
-{{--        @endif--}}
+        @if ($user->phone)
+            <tr>
+                <th>Two Factor Auth</th>
+                <td>
+                    <form method="POST" action="{{ route('account.profile.phone.auth') }}">
+                        @csrf
+
+                        @if ($user->isPhoneAuthEnabled())
+                            <button type="submit" class="btn btn-sm btn-success">On</button>
+                        @else
+                            <button type="submit" class="btn btn-sm btn-danger">Off</button>
+                        @endif
+
+                    </form>
+                </td>
+            </tr>
+        @endif
         </tbody>
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
