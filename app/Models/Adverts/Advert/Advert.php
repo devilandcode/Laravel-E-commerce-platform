@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models\Adverts;
+namespace App\Models\Adverts\Advert;
 
 
+use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
 use Carbon\Carbon;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 
 /**
- * App\Models\Adverts\Advert
+ * App\Models\Adverts\Adverts
  *
  * @property-read \App\Models\Adverts\Category|null $category
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $favorites
@@ -87,7 +88,7 @@ class Advert extends Model
     public function sendToModeration(): void
     {
         if (!$this->isDraft()) {
-            throw new \DomainException('Advert is not draft.');
+            throw new \DomainException('Adverts is not draft.');
         }
         if (!\count($this->photos)) {
             throw new \DomainException('Upload photos.');
@@ -100,7 +101,7 @@ class Advert extends Model
     public function moderate(Carbon $date): void
     {
         if ($this->status !== self::STATUS_MODERATION) {
-            throw new \DomainException('Advert is not sent to moderation.');
+            throw new \DomainException('Adverts is not sent to moderation.');
         }
         $this->update([
             'published_at' => $date,

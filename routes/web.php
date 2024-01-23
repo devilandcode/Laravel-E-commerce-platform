@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\Adverts\CreateController;
 use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController;
 use App\Http\Controllers\Account\PhoneController;
@@ -93,6 +94,10 @@ Route::group(
             'as' => 'adverts.',
         ], function () {
             Route::get('/', [AdvertController::class, 'index'])->name('index');
+            Route::get('/create', [CreateController::class, 'category'])->name('create');
+            Route::get('/create/region/{category}/{region?}', [CreateController::class, 'region'])->name('create.region');
+            Route::get('/create/advert/{category}/{region?}', [CreateController::class, 'advert'])->name('create.advert');
+//            Route::post('/create/advert/{category}/{region?}', 'CreateController@store')->name('create.advert.store');
         });
     }
 );
