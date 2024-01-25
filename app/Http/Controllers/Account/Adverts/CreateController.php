@@ -7,12 +7,15 @@ use App\Http\Middleware\FilledProfile;
 use App\Http\Requests\Adverts\CreateRequest;
 use App\Models\Adverts\Category;
 use App\Models\Region;
+use App\Services\Adverts\AdvertService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CreateController extends Controller
 {
-    public function __construct()
+    public function __construct(
+        private AdvertService $service
+    )
     {
         $this->middleware(FilledProfile::class);
     }

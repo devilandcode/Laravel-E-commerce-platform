@@ -4,11 +4,24 @@
 @section('content')
     <div class="container">
         {{ Breadcrumbs::render('home') }}
+
+        <p><a href="{{ route('account.adverts.create') }}" class="btn btn-success">Create Advert</a></p>
         <div class="card card-default mb-3">
             <div class="card-header">
                 All Categories
             </div>
             <div class="card-body pb-0" style="color: #aaa">
+                <div class="row">
+                    @foreach (array_chunk($categories, 3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach ($chunk as $current)
+                                    <li><a href="#">{{ $current->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
 
@@ -18,8 +31,16 @@
             </div>
             <div class="card-body pb-0" style="color: #aaa">
                 <div class="row">
+                    @foreach (array_chunk($regions, 3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach ($chunk as $current)
+                                    <li><a href="#">{{ $current->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    </div>
 @endsection

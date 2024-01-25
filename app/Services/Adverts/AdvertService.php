@@ -3,10 +3,13 @@
 namespace App\Services\Adverts;
 
 use App\Http\Requests\Adverts\CreateRequest;
+use App\Http\Requests\Adverts\PhotoRequest;
+use App\Http\Requests\Adverts\RejectRequest;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdvertService
@@ -51,19 +54,19 @@ class AdvertService
         });
     }
 
-//    public function addPhotos($id, PhotosRequest $request): void
-//    {
-//        $advert = $this->getAdvert($id);
-//
-//        DB::transaction(function () use ($request, $advert) {
-//            foreach ($request['files'] as $file) {
-//                $advert->photos()->create([
-//                    'file' => $file->store('adverts', 'public')
-//                ]);
-//            }
-//            $advert->update();
-//        });
-//    }
+    public function addPhotos($id, PhotoRequest $request): void
+    {
+        $advert = $this->getAdvert($id);
+
+        DB::transaction(function () use ($request, $advert) {
+            foreach ($request['files'] as $file) {
+                $advert->photos()->create([
+                    'file' => $file->store('adverts', 'public')
+                ]);
+            }
+            $advert->update();
+        });
+    }
 //
 //    public function edit($id, EditRequest $request): void
 //    {
@@ -76,25 +79,24 @@ class AdvertService
 //        ]));
 //    }
 //
-//    public function sendToModeration($id): void
-//    {
-//        $advert = $this->getAdvert($id);
-//        $advert->sendToModeration();
-//    }
-//
-//    public function moderate($id): void
-//    {
-//        $advert = $this->getAdvert($id);
-//        $advert->moderate(Carbon::now());
-//        event(new ModerationPassed($advert));
-//    }
-//
-//    public function reject($id, RejectRequest $request): void
-//    {
-//        $advert = $this->getAdvert($id);
-//        $advert->reject($request['reason']);
-//    }
-//
+    public function sendToModeration($id): void
+    {
+        $advert = $this->getAdvert($id);
+        $advert->sendToModeration();
+    }
+
+    public function moderate($id): void
+    {
+        $advert = $this->getAdvert($id);
+        $advert->moderate(Carbon::now());
+    }
+
+    public function reject($id, RejectRequest $request): void
+    {
+        $advert = $this->getAdvert($id);
+        $advert->reject($request['reason']);
+    }
+
 //    public function editAttributes($id, AttributesRequest $request): void
 //    {
 //        $advert = $this->getAdvert($id);

@@ -2,7 +2,6 @@
 
 namespace App\Models\Adverts\Advert;
 
-
 use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
@@ -37,6 +36,8 @@ use Illuminate\Database\Query\Builder;
  * @property string $content
  * @property string $status
  * @property string|null $reject_reason
+ * @property Value[] $values
+ * @property Photo[] $photos
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $published_at
@@ -220,15 +221,15 @@ class Advert extends Model
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
-//    public function values()
-//    {
-//        return $this->hasMany(Value::class, 'advert_id', 'id');
-//    }
-//
-//    public function photos()
-//    {
-//        return $this->hasMany(Photo::class, 'advert_id', 'id');
-//    }
+    public function values()
+    {
+        return $this->hasMany(Value::class, 'advert_id', 'id');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'advert_id', 'id');
+    }
 
     public function favorites()
     {

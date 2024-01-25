@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder roots()
  * @mixin \Eloquent
  */
 class Region extends Model
@@ -55,9 +57,9 @@ class Region extends Model
         return $this->hasMany(static::class, 'parent_id', 'id');
     }
 
-//    public function scopeRoots(Builder $query)
-//    {
-//        return $query->where('parent_id', null);
-//    }
+    public function scopeRoots(Builder $query)
+    {
+        return $query->where('parent_id', null);
+    }
 
 }
