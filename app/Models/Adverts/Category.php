@@ -104,4 +104,5 @@ class Category extends Model
     {
         return $this->hasMany(Attribute::class, 'category_id', 'id');
     }
+    
 }

@@ -56,6 +56,8 @@ use Illuminate\Database\Query\Builder;
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereUserId($value)
+ * @property-read int|null $photos_count
+ * @property-read int|null $values_count
  * @mixin \Eloquent
  */
 class Advert extends Model
