@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render() }}
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>

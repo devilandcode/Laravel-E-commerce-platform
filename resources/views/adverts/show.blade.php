@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render() }}
 
     @if ($advert->isDraft())
         <div class="alert alert-danger">
@@ -13,7 +14,7 @@
         @endif
     @endif
 
-    @can ('manage-adverts')
+    @can ('manage-own-adverts')
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('admin.adverts.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
             <a href="{{ route('admin.adverts.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
@@ -39,11 +40,11 @@
 
     @can ('manage-own-advert', $advert)
             <div class="d-flex flex-row mb-3">
-                <a href="{{ route('cabinet.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
-                <a href="{{ route('cabinet.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
+                <a href="{{ route('account.adverts.edit', $advert) }}" class="btn btn-primary mr-1">Edit</a>
+                <a href="{{ route('account.adverts.photos', $advert) }}" class="btn btn-primary mr-1">Photos</a>
 
                 @if ($advert->isDraft())
-                    <form method="POST" action="{{ route('cabinet.adverts.send', $advert) }}" class="mr-1">
+                    <form method="POST" action="{{ route('account.adverts.send', $advert) }}" class="mr-1">
                         @csrf
                         <button class="btn btn-success">Publish</button>
                     </form>

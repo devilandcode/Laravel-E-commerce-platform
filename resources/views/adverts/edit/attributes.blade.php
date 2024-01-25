@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render() }}
     <form method="POST" action="?">
         @csrf
 

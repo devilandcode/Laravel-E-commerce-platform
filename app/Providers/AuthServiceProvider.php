@@ -33,6 +33,10 @@ class AuthServiceProvider extends ServiceProvider
                         : Response::denyWithStatus(403);
         });
 
+        Gate::define('moderate-advert', function (User $user, Advert $advert) {
+            return $user->isAdmin() || $user->isModerator();
+        });
+
         Gate::define('show-advert', function (User $user, Advert $advert) {
             return $user->isAdmin() || $user->isModerator() || $advert->user_id === $user->id;
         });

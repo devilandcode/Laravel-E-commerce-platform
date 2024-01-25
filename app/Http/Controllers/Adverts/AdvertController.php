@@ -14,7 +14,7 @@ class AdvertController extends Controller
 {
     public function index(Region $region = null, Category $category = null)
     {
-       $query = Advert::with(['category', 'region'])->orderByDesc('id');
+       $query = Advert::active()->with(['category', 'region'])->orderByDesc('id');
 
        if ($category) {
            $query->forCategory($category);
@@ -45,6 +45,15 @@ class AdvertController extends Controller
         }
 
         return view('adverts.show', compact('advert'));
+    }
+
+    public function phone(Advert $advert): string
+    {
+        if (!($advert->isActive() || Gate::allows('show-advert', $advert))) {
+            abort(403);
+        }
+
+        return $advert->user->phone;
     }
 
 }

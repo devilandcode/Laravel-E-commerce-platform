@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        {{ Breadcrumbs::render('admin.home') }}
+        {{ Breadcrumbs::render() }}
         @include ('admin._nav', ['page' => ''])
     </div>
 @endsection

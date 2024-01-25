@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render() }}
     @include('admin.adverts.adverts._nav')
 
     <div class="card mb-3">

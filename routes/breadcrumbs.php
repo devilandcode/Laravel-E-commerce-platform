@@ -4,6 +4,9 @@
 
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
+
+use App\Models\Adverts\Category;
+use App\Models\Region;
 use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
@@ -35,7 +38,7 @@ Breadcrumbs::for('register', function (BreadcrumbTrail $trail) {
     $trail->push('Register', route('register'));
 });
 
-// Home > admin
+// Admin
 Breadcrumbs::for('admin.home', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Admin', route('admin.home'));
@@ -82,6 +85,21 @@ Breadcrumbs::for('account.home', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('account.adverts.index', function (BreadcrumbTrail $trail) {
     $trail->parent('account.home');
     $trail->push('Adverts', route('account.adverts.index'));
+});
+
+Breadcrumbs::for('account.adverts.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('adverts.index');
+    $trail->push('Create', route('account.adverts.create'));
+});
+
+Breadcrumbs::for('account.adverts.create.region', function (BreadcrumbTrail $trail, Category $category, Region $region = null) {
+    $trail->parent('cabinet.adverts.create');
+    $trail->push($category->name, route('account.adverts.create.region', [$category, $region]));
+});
+
+Breadcrumbs::for('account.adverts.create.advert', function (BreadcrumbTrail $trail, Category $category, Region $region = null) {
+    $trail->parent('cabinet.adverts.create.region', $category, $region);
+    $trail->push($region ? $region->name : 'All', route('account.adverts.create.advert', [$category, $region]));
 });
 
 //Profile
