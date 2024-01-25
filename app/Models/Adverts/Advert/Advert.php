@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Adverts;
+namespace App\Models\Adverts\Advert;
 
-
+use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
 use Carbon\Carbon;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 
 /**
- * App\Models\Adverts\Advert
+ * App\Models\Adverts\Adverts
  *
  * @property-read \App\Models\Adverts\Category|null $category
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $favorites
@@ -36,6 +36,8 @@ use Illuminate\Database\Query\Builder;
  * @property string $content
  * @property string $status
  * @property string|null $reject_reason
+ * @property Value[] $values
+ * @property Photo[] $photos
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $published_at
@@ -87,7 +89,7 @@ class Advert extends Model
     public function sendToModeration(): void
     {
         if (!$this->isDraft()) {
-            throw new \DomainException('Advert is not draft.');
+            throw new \DomainException('Adverts is not draft.');
         }
         if (!\count($this->photos)) {
             throw new \DomainException('Upload photos.');
@@ -100,7 +102,7 @@ class Advert extends Model
     public function moderate(Carbon $date): void
     {
         if ($this->status !== self::STATUS_MODERATION) {
-            throw new \DomainException('Advert is not sent to moderation.');
+            throw new \DomainException('Adverts is not sent to moderation.');
         }
         $this->update([
             'published_at' => $date,
@@ -219,15 +221,15 @@ class Advert extends Model
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
-//    public function values()
-//    {
-//        return $this->hasMany(Value::class, 'advert_id', 'id');
-//    }
-//
-//    public function photos()
-//    {
-//        return $this->hasMany(Photo::class, 'advert_id', 'id');
-//    }
+    public function values()
+    {
+        return $this->hasMany(Value::class, 'advert_id', 'id');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'advert_id', 'id');
+    }
 
     public function favorites()
     {
