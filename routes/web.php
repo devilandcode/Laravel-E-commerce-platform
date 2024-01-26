@@ -37,8 +37,8 @@ Route::group([
     Route::get('/show/{advert}', [AdvertController::class, 'show'])->name('show');
     Route::post('/show/{advert}/phone', [AdvertController::class, 'phone'])->name('phone');
 
-    Route::get('/all/{category?}', [AdvertController::class, 'index'])->name('index.all');
-    Route::get('/{region?}/{category?}', [AdvertController::class, 'index'])->name('index');
+//    Route::get('/all/{category?}', [AdvertController::class, 'index'])->name('index.all');
+//    Route::get('/{region?}/{category?}', [AdvertController::class, 'index'])->name('index');
 
     Route::get('/{adverts_path?}', 'AdvertController@index')->name('index')->where('adverts_path', '.+');
 });
