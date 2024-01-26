@@ -83,6 +83,14 @@ class User extends Authenticatable
         'phone_auth' => 'boolean',
     ];
 
+    public static function rolesList(): array
+    {
+        return [
+            self::ROLE_USER => 'User',
+            self::ROLE_MODERATOR => 'Moderator',
+            self::ROLE_ADMIN => 'Admin',
+        ];
+    }
 
     public static function register(string $name, string $email, string $password): self
     {
@@ -205,6 +213,11 @@ class User extends Authenticatable
     public function isPhoneAuthEnabled(): bool
     {
         return (bool)$this->phone_auth;
+    }
+
+    public function isModerator(): bool
+    {
+        return $this->role === self::ROLE_MODERATOR;
     }
 
     public function isAdmin(): bool

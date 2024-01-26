@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('moderate-advert', function (User $user, Advert $advert) {
-            return $user->isAdmin() || $user->isModerator();
+            return $user->isAdmin() || $user->isModerator() || $advert->user_id === $user->id;
         });
 
         Gate::define('show-advert', function (User $user, Advert $advert) {
@@ -45,6 +45,10 @@ class AuthServiceProvider extends ServiceProvider
            return $user->id === $advert->user_id
                            ? Response::allow()
                            : Response::denyWithStatus(403);
+        });
+
+        Gate::define('manage-adverts', function (User $user) {
+            return $user->isAdmin() || $user->isModerator();
         });
     }
 }

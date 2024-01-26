@@ -83,6 +83,7 @@ Route::group(
         'prefix' => 'account',
         'as' => 'account.',
         'middleware' => ['auth'],
+
     ], function () {
         Route::get('/', [AccountController::class, 'index'])->name('home');
 
@@ -102,10 +103,11 @@ Route::group(
         });
 
 
-        Route::group([
-            'prefix' => 'adverts',
-            'as' => 'adverts.',
-        ], function () {
+        Route::group(
+            [
+                'prefix' => 'adverts',
+                'as' => 'adverts.',
+            ], function () {
             Route::get('/', [MyAdvertsController::class, 'index'])->name('index');
             Route::get('/create', [CreateController::class, 'category'])->name('create');
             Route::get('/create/region/{category}/{region?}', [CreateController::class, 'region'])->name('create.region');

@@ -5,6 +5,8 @@
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
 
+
+use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
@@ -44,35 +46,70 @@ Breadcrumbs::for('admin.home', function (BreadcrumbTrail $trail) {
     $trail->push('Admin', route('admin.home'));
 });
 
-// Home > admin > users
+
 Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
     $trail->push('Users', route('admin.users.index'));
 });
 
-// Home > admin > users > create
+
 Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.users.index');
     $trail->push('Create', route('admin.users.create'));
 });
 
-// Home > admin > users > show
+
 Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, User $user) {
     $trail->parent('admin.users.index');
     $trail->push($user->name, route('admin.users.show', $user));
 });
 
-// Home > admin > users > edit
+
 Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, User $user) {
     $trail->parent('admin.users.index');
     $trail->push($user->name, route('admin.users.edit', $user));
 });
 
-// Home > admin > regions
+
 Breadcrumbs::for('admin.regions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.home');
     $trail->push('Regions', route('admin.regions.index'));
 });
+
+
+// Adverts
+Breadcrumbs::for('adverts.inner_region', function (BreadcrumbTrail $trail, Region $region = null, Category $category = null) {
+    if ($region && $parent = $region->parent) {
+        $trail->parent('adverts.inner_region', $parent, $category);
+    } else {
+        $trail->parent('home');
+        $trail->push('Adverts', route('adverts.index'));
+    }
+    if ($region) {
+        $trail->push($region->name, route('adverts.index', $region, $category));
+    }
+});
+
+Breadcrumbs::for('adverts.inner_category', function (BreadcrumbTrail $trail, Region $region = null, Category $category = null) {
+    if ($category && $parent = $category->parent) {
+        $trail->parent('adverts.inner_category', $region, $parent);
+    } else {
+        $trail->parent('adverts.inner_region', $region, $category);
+    }
+    if ($category) {
+        $trail->push($category->name, route('adverts.index', $region, $category));
+    }
+});
+
+Breadcrumbs::for('adverts.index', function (BreadcrumbTrail $trail, Region $region = null, Category $category = null) {
+    $trail->parent('adverts.inner_category', $region, $category);
+});
+
+Breadcrumbs::for('adverts.show', function (BreadcrumbTrail $trail, Advert $advert) {
+    $trail->parent('adverts.index', $advert->region, $advert->category);
+    $trail->push($advert->title, route('adverts.show', $advert));
+});
+
 
 // Account
 Breadcrumbs::for('account.home', function (BreadcrumbTrail $trail) {
@@ -80,27 +117,28 @@ Breadcrumbs::for('account.home', function (BreadcrumbTrail $trail) {
     $trail->push('Account', route('account.home'));
 });
 
-// Account Adverts
 
+// Account Adverts
 Breadcrumbs::for('account.adverts.index', function (BreadcrumbTrail $trail) {
     $trail->parent('account.home');
     $trail->push('Adverts', route('account.adverts.index'));
 });
 
 Breadcrumbs::for('account.adverts.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('adverts.index');
+    $trail->parent('account.adverts.index');
     $trail->push('Create', route('account.adverts.create'));
 });
 
 Breadcrumbs::for('account.adverts.create.region', function (BreadcrumbTrail $trail, Category $category, Region $region = null) {
-    $trail->parent('cabinet.adverts.create');
+    $trail->parent('account.adverts.create');
     $trail->push($category->name, route('account.adverts.create.region', [$category, $region]));
 });
 
 Breadcrumbs::for('account.adverts.create.advert', function (BreadcrumbTrail $trail, Category $category, Region $region = null) {
-    $trail->parent('cabinet.adverts.create.region', $category, $region);
+    $trail->parent('account.adverts.create.region', $category, $region);
     $trail->push($region ? $region->name : 'All', route('account.adverts.create.advert', [$category, $region]));
 });
+
 
 //Profile
 Breadcrumbs::for('account.profile.home', function (BreadcrumbTrail $trail) {

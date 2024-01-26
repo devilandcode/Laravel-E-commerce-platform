@@ -6,26 +6,13 @@ use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 /**
- * App\Models\Adverts\Adverts
+ * App\Models\Adverts\Advert\Advert
  *
- * @property-read \App\Models\Adverts\Category|null $category
- * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $favorites
- * @property-read int|null $favorites_count
- * @property-read Region|null $region
- * @property-read User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Advert active()
- * @method static \Illuminate\Database\Eloquent\Builder|Advert favoredByUser(\App\Models\User $user)
- * @method static \Illuminate\Database\Eloquent\Builder|Advert forCategory(\App\Models\Adverts\Category $category)
- * @method static \Illuminate\Database\Eloquent\Builder|Advert forRegion(\App\Models\Region $region)
- * @method static \Illuminate\Database\Eloquent\Builder|Advert forUser(\App\Models\User $user)
- * @method static \Illuminate\Database\Eloquent\Builder|Advert newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Advert newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Advert query()
  * @property int $id
  * @property int $user_id
  * @property int $category_id
@@ -36,12 +23,27 @@ use Illuminate\Database\Query\Builder;
  * @property string $content
  * @property string $status
  * @property string|null $reject_reason
- * @property Value[] $values
- * @property Photo[] $photos
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $published_at
  * @property \Illuminate\Support\Carbon|null $expires_at
+ * @property-read Category|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $favorites
+ * @property-read int|null $favorites_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Adverts\Advert\Photo> $photos
+ * @property-read int|null $photos_count
+ * @property-read Region|null $region
+ * @property-read User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Adverts\Advert\Value> $values
+ * @property-read int|null $values_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert active()
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert favoredByUser(\App\Models\User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert forCategory(\App\Models\Adverts\Category $category)
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert forRegion(\App\Models\Region $region)
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert forUser(\App\Models\User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert query()
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereContent($value)
@@ -56,8 +58,6 @@ use Illuminate\Database\Query\Builder;
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert whereUserId($value)
- * @property-read int|null $photos_count
- * @property-read int|null $values_count
  * @mixin \Eloquent
  */
 class Advert extends Model
@@ -96,6 +96,7 @@ class Advert extends Model
         if (!\count($this->photos)) {
             throw new \DomainException('Upload photos.');
         }
+
         $this->update([
             'status' => self::STATUS_MODERATION,
         ]);
@@ -242,6 +243,7 @@ class Advert extends Model
 //    {
 //        return $this->hasMany(Dialog::class, 'advert_id', 'id');
 //    }
+
 
     public function scopeActive(Builder $query)
     {
