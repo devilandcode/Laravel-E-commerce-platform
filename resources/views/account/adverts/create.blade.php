@@ -1,7 +1,10 @@
+@php use Diglactic\Breadcrumbs\Breadcrumbs; @endphp
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.adverts._nav')
+    {{ Breadcrumbs::render()}}
+
+    @include('account.adverts._nav')
 
     <form method="POST" action="#">
         @csrf

@@ -24,19 +24,19 @@ class CreateController extends Controller
     {
         $categories = Category::defaultOrder()->withDepth()->get()->toTree();
 
-        return view('cabinet.adverts.create.category', compact('categories'));
+        return view('account.adverts.create.category', compact('categories'));
     }
 
     public function region(Category $category, Region $region = null)
     {
         $regions = Region::where('parent_id', $region ? $region->id : null)->orderBy('name')->get();
 
-        return view('cabinet.adverts.create.region', compact('category', 'region', 'regions'));
+        return view('account.adverts.create.region', compact('category', 'region', 'regions'));
     }
 
     public function advert(Category $category, Region $region = null)
     {
-        return view('cabinet.adverts.create.advert', compact('category', 'region'));
+        return view('account.adverts.create.advert', compact('category', 'region'));
     }
 
     public function store(CreateRequest $request, Category $category, Region $region = null)
