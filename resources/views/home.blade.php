@@ -5,7 +5,6 @@
     <div class="container">
         {{ Breadcrumbs::render('home') }}
 
-        <p><a href="{{ route('account.adverts.create') }}" class="btn btn-success">Create Advert</a></p>
         <div class="card card-default mb-3">
             <div class="card-header">
                 All Categories

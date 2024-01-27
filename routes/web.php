@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\Adverts\CreateController;
 use App\Http\Controllers\Account\Adverts\ManageController;
 use App\Http\Controllers\Adverts\AdvertController;
+use App\Http\Controllers\Adverts\FavoriteController;
 use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController as MyAdvertsController;
 use App\Http\Controllers\Admin\Adverts\AdvertController as AdminAdvertController;
@@ -37,7 +38,8 @@ Route::group([
 ], function () {
     Route::get('/show/{advert}', [AdvertController::class, 'show'])->name('show');
     Route::post('/show/{advert}/phone', [AdvertController::class, 'phone'])->name('phone');
-
+    Route::post('/show/{advert}/favorites', [FavoriteController::class, 'add'])->name('favorites');
+    Route::delete('/show/{advert}/favorites', [FavoriteController::class, 'remove']);
 //    Route::get('/all/{category?}', [AdvertController::class, 'index'])->name('index.all');
 //    Route::get('/{region?}/{category?}', [AdvertController::class, 'index'])->name('index');
 
@@ -144,6 +146,7 @@ Route::group(
             Route::post('/{advert}/close', [ManageController::class,'close'])->name('close');
             Route::delete('/{advert}/destroy', [ManageController::class,'destroy'])->name('destroy');
         });
+
     }
 );
 

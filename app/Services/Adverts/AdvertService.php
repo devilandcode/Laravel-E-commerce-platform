@@ -73,6 +73,7 @@ class AdvertService
     public function edit($id, EditRequest $request): void
     {
         $advert = $this->getAdvert($id);
+        $oldPrice = $advert->price;
         $advert->update($request->only([
             'title',
             'content',
