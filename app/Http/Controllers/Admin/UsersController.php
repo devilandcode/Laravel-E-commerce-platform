@@ -13,6 +13,7 @@ class UsersController extends Controller
 {
     public function __construct(private RegisterService $service)
     {
+        $this->middleware('can:manage-users');
     }
 
     public function index(Request $request)

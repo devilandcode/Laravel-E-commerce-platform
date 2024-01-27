@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\Adverts\ManageController;
 use App\Http\Controllers\Adverts\AdvertController;
 use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController as MyAdvertsController;
+use App\Http\Controllers\Admin\Adverts\AdvertController as AdminAdvertController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Admin\Adverts\AttributeController;
@@ -40,7 +41,7 @@ Route::group([
 //    Route::get('/all/{category?}', [AdvertController::class, 'index'])->name('index.all');
 //    Route::get('/{region?}/{category?}', [AdvertController::class, 'index'])->name('index');
 
-    Route::get('/{adverts_path?}', 'AdvertController@index')->name('index')->where('adverts_path', '.+');
+    Route::get('/{adverts_path?}', [AdvertController::class, 'index'])->name('index')->where('adverts_path', '.+');
 });
 
 Route::group(
@@ -63,17 +64,35 @@ Route::group(
             ], function () {
                 Route::resource('categories', CategoryController::class);
 
-                Route::group(
-                    [
-                        'prefix' => 'categories/{category}',
-                        'as' => 'categories.'
-                    ], function () {
-                    Route::get('/first', [CategoryController::class,'first'])->name('first');
-                    Route::get('/up', [CategoryController::class,'up'])->name('up');
-                    Route::get('/down', [CategoryController::class,'down'])->name('down');
-                    Route::get('/last', [CategoryController::class,'last'])->name('last');
-                    Route::resource('attributes', AttributeController::class)->except('index');
-                });
+            Route::group(
+                [
+                    'prefix' => 'categories/{category}',
+                    'as' => 'categories.'
+                ], function () {
+                Route::get('/first', [CategoryController::class,'first'])->name('first');
+                Route::get('/up', [CategoryController::class,'up'])->name('up');
+                Route::get('/down', [CategoryController::class,'down'])->name('down');
+                Route::get('/last', [CategoryController::class,'last'])->name('last');
+                Route::resource('attributes', AttributeController::class)->except('index');
+            });
+
+            Route::group(
+                [
+                    'prefix' => 'adverts',
+                    'as' => 'adverts.'
+                ], function () {
+                Route::get('/', [AdminAdvertController::class, 'index'])->name('index');
+                Route::get('/{advert}/edit', [AdminAdvertController::class, 'editForm'])->name('edit');
+                Route::put('/{advert}/edit', [AdminAdvertController::class, 'edit']);
+                Route::get('/{advert}/photos', [AdminAdvertController::class, 'photosForm'])->name('photos');
+                Route::post('/{advert}/photos', [AdminAdvertController::class, 'photos']);
+                Route::get('/{advert}/attributes', [AdminAdvertController::class, 'attributesForm'])->name('attributes');
+                Route::post('/{advert}/attributes', [AdminAdvertController::class, 'attributes']);
+                Route::post('/{advert}/moderate', [AdminAdvertController::class, 'moderate'])->name('moderate');
+                Route::get('/{advert}/reject', [AdminAdvertController::class, 'rejectForm'])->name('reject');
+                Route::post('/{advert}/reject', [AdminAdvertController::class, 'reject']);
+                Route::delete('/{advert}/destroy', [AdminAdvertController::class, 'destroy'])->name('destroy');
+            });
             }
         );
     }

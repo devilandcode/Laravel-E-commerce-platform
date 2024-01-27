@@ -77,6 +77,11 @@ Breadcrumbs::for('admin.regions.index', function (BreadcrumbTrail $trail) {
     $trail->push('Regions', route('admin.regions.index'));
 });
 
+Breadcrumbs::for('admin.adverts.adverts.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.home');
+    $trail->push('Categories', route('admin.adverts.adverts.index'));
+});
+
 
 // Adverts
 Breadcrumbs::for('adverts.inner_region', function (BreadcrumbTrail $trail, AdvertsPath $path) {
@@ -108,7 +113,7 @@ Breadcrumbs::for('adverts.index', function (BreadcrumbTrail $trail, AdvertsPath 
 });
 
 Breadcrumbs::for('adverts.show', function (BreadcrumbTrail $trail, Advert $advert) {
-    $trail->parent('adverts.index', $advert->region, $advert->category);
+    $trail->parent('adverts.index', adverts_path($advert->region, $advert->category));
     $trail->push($advert->title, route('adverts.show', $advert));
 });
 

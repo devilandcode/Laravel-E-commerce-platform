@@ -3,14 +3,48 @@
 
 @section('content')
     {{ Breadcrumbs::render() }}
-    <ul class="nav nav-tabs mb-3">
-        <li class="nav-item"><a class="nav-link" href="{{ route('account.home') }}">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link active" href="{{ route('account.adverts.index') }}">Adverts</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Favorites</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Banners</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('account.profile.home') }}">Profile</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Tickets</a></li>
-    </ul>
+    @include('account.adverts._nav')
 
-{{--    <div class="region-selector" data-selected="{{ json_encode((array)old('regions')) }}" data-source="{{ route('ajax.regions') }}"></div>--}}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Updated</th>
+            <th>Title</th>
+            <th>Region</th>
+            <th>Category</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach ($adverts as $advert)
+            <tr>
+                <td>{{ $advert->id }}</td>
+                <td>{{ $advert->updated_at }}</td>
+                <td><a href="{{ route('adverts.show', $advert) }}" target="_blank">{{ $advert->title }}</a></td>
+                <td>
+                    @if ($advert->region)
+                        {{ $advert->region->name }}
+                    @endif
+                </td>
+                <td>{{ $advert->category->name }}</td>
+                <td>
+                    @if ($advert->isDraft())
+                        <span class="badge text-bg-secondary">Draft</span>
+                    @elseif ($advert->isOnModeration())
+                        <span class="badge text-bg-warning">Moderation</span>
+                    @elseif ($advert->isActive())
+                        <span class="badge text-bg-success">Active</span>
+                    @elseif ($advert->isClosed())
+                        <span class="badge text-bg-danger">Closed</span>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+
+        </tbody>
+    </table>
+
+    {{ $adverts->links() }}
 @endsection
