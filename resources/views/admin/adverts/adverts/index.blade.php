@@ -42,7 +42,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="status" class="col-form-label">Status</label>
-                            <select id="status" class="form-control" name="status">
+                            <select id="status" class="form-select" name="status">
                                 <option value=""></option>
                                 @foreach ($statuses as $value => $label)
                                     <option value="{{ $value }}"{{ $value === request('status') ? ' selected' : '' }}>{{ $label }}</option>
@@ -90,13 +90,13 @@
                 <td>{{ $advert->category->id }} - {{ $advert->category->name }}</td>
                 <td>
                     @if ($advert->isDraft())
-                        <span class="badge badge-secondary">Draft</span>
+                        <span class="badge text-bg-secondary">Draft</span>
                     @elseif ($advert->isOnModeration())
-                        <span class="badge badge-primary">Moderation</span>
+                        <span class="badge text-bg-warning">Moderation</span>
                     @elseif ($advert->isActive())
-                        <span class="badge badge-primary">Active</span>
+                        <span class="badge text-bg-success">Active</span>
                     @elseif ($advert->isClosed())
-                        <span class="badge badge-secondary">Closed</span>
+                        <span class="badge text-bg-danger">Closed</span>
                     @endif
                 </td>
             </tr>

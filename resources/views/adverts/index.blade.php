@@ -51,7 +51,7 @@
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
                                     <li>
-                                        <a href="{{ route('adverts.index', [$current, $category]) }}">{{ $current->name }}</a>
+                                        <a href="{{ route('adverts.index', adverts_path($current, $category)) }}">{{ $current->name }}</a>
                                         ({{ $regionsCounts[$current->id] ?? 0 }})
                                     </li>
                                 @endforeach
@@ -74,7 +74,9 @@
                                 <div style="height: 180px; background: #f6f6f6; border: 1px solid #ddd"></div>
                             </div>
                             <div class="col-md-9">
-                                <span class="float-right">{{ $advert->price }}</span>
+                                <div class="d-flex justify-content-end">
+                                    <span class="float-right">price: <strong>{{ $advert->price }}</strong></span>
+                                </div>
                                 <div class="h4" style="margin-top: 0"><a href="{{ route('adverts.show', $advert) }}">{{ $advert->title }}</a></div>
                                 <p>Region: <a href="">{{ $advert->region ? $advert->region->name : 'All' }}</a></p>
                                 <p>Category: <a href="">{{ $advert->category->name }}</a></p>
@@ -87,9 +89,9 @@
 
             {{ $adverts->links() }}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" style="background-color: gray; height: 400px">
             <div
-                class="banner mb-3"
+                class="banner mb-3 bg-secondary"
 {{--                data-url="{{ route('banner.get') }}"--}}
                 data-format="240x400"
                 data-category="{{ $category ? $category->id : '' }}"

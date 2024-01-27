@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Region;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RegionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:manage-regions');
+    }
 
     public function index()
     {
@@ -74,7 +79,6 @@ class RegionController extends Controller
     public function destroy(Region $region)
     {
         $region->delete();
-
         return redirect()->route('admin.regions.index');
     }
 }
