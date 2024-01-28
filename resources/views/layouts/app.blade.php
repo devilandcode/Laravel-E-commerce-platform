@@ -68,7 +68,7 @@
 
     <footer class="fixed-bottom">
         <div class="container">
-            <div class="border-top pt-3">
+            <div class="pt-3">
                 <p>&copy; {{ date('Y') }} - Dashboard</p>
             </div>
         </div>

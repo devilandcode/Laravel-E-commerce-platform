@@ -6,9 +6,9 @@ use App\Http\Requests\Adverts\SearchRequest;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
-use App\UseCases\Adverts\SearchResult;
 use Elastic\Elasticsearch\Client;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Database\Query\Expression;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchService
 {
@@ -16,7 +16,7 @@ class SearchService
     {
     }
 
-    public function search(?Category $category, ?Region $region, SearchRequest $request, int $perPage, int $page): Paginator
+    public function search(?Category $category, ?Region $region, SearchRequest $request, int $perPage, int $page): LengthAwarePaginator
     {
         $values = array_filter((array)$request->input('attrs'), function ($value) {
             return !empty($value['equals']) || !empty($value['from']) || !empty($value['to']);
@@ -28,6 +28,9 @@ class SearchService
                 '_source' => ['id'],
                 'from' => ($page - 1) * $perPage,
                 'size' => $perPage,
+                'sort' => empty($request['text']) ? [
+                    ['published_at' => ['order' => 'desc']],
+                ] : [],
                 'query' => [
                     'bool' => [
                         'must' => array_merge(
@@ -67,21 +70,17 @@ class SearchService
 
         $ids = array_column($response['hits']['hits'], '_id');
 
-        if ($ids) {
-            $items = \App\Entity\Adverts\Advert\Advert::active()
-                ->with(['category', 'region'])
-                ->whereIn('id', $ids)
-                ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'))
-                ->get();
-            $pagination = new LengthAwarePaginator($items, $response['hits']['total'], $perPage, $page);
-        } else {
-            $pagination = new LengthAwarePaginator([], 0, $perPage, $page);
+        if (! $ids) {
+            return  new LengthAwarePaginator([], 0, $perPage, $page);
         }
 
-        return new SearchResult(
-            $pagination,
-            array_column($response['aggregations']['group_by_region']['buckets'], 'doc_count', 'key'),
-            array_column($response['aggregations']['group_by_category']['buckets'], 'doc_count', 'key')
-        );
+        $items = Advert::active()
+            ->with(['category', 'region'])
+            ->whereIn('id', $ids)
+            ->orderBy(new Expression('FIELD(id,' . implode(',', $ids) . ')'))
+            ->get();
+
+        return new LengthAwarePaginator($items, $response['hits']['total']['value'], $perPage, $page);
+
     }
 }
