@@ -20,12 +20,12 @@
                         <div class="row">
                             @foreach ($category->allAttributes() as $attribute)
                                 @if ($attribute->isSelect() || $attribute->isNumber())
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">{{ $attribute->name }}</label>
+                                    <div class="container col-md-4">
+                                        <div class="d-flex form-group">
+                                            <label class="col-form-label me-3">{{ $attribute->name }}</label>
 
                                             @if ($attribute->isSelect())
-                                                <select class="form-control" name="attrs[{{ $attribute->id }}][equals]">
+                                                <select class="form-select" name="attrs[{{ $attribute->id }}][equals]">
                                                     <option value=""></option>
                                                     @foreach ($attribute->variants as $variant)
                                                         <option value="{{ $variant }}"{{ $variant === request()->input('attrs.' . $attribute->id . '.equals') ? ' selected' : '' }}>

@@ -41,6 +41,13 @@ class AdvertController extends Controller
             ? $category->children()->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
+        $regions = array_filter($regions, function (Region $region) use ($regionsCounts) {
+            return isset($regionsCounts[$region->id]) && $regionsCounts[$region->id] > 0;
+        });
+
+        $categories = array_filter($categories, function (Category $category) use ($categoriesCounts) {
+            return isset($categoriesCounts[$category->id]) && $categoriesCounts[$category->id] > 0;
+        });
 
         return view('adverts.index', compact(
             'category', 'region', 'categories', 'regions',

@@ -72,6 +72,11 @@ class AdvertController extends Controller
 
         return redirect()->route('adverts.show', $advert);
     }
+
+    public function attributesForm(Advert $advert)
+    {
+        return view('adverts.edit.attributes', compact('advert'));
+    }
     public function attributes(AttributesRequest $request, Advert $advert)
     {
         try {
