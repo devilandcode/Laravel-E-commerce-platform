@@ -1,4 +1,4 @@
-docker-up:
+docker-up: memory
 	docker-compose up -d
 
 docker-down:
@@ -12,3 +12,6 @@ test:
 
 run dev:
 	docker exec app-node-1 npm run dev
+
+memory:
+	sysctl -w vm.max_map_count=262144

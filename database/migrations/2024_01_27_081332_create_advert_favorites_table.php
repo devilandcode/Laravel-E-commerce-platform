@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('advert_favorites', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->integer('advert_id')->references('id')->on('advert_adverts')->onDelete('CASCADE');
+            $table->primary(['user_id', 'advert_id']);
         });
     }
 

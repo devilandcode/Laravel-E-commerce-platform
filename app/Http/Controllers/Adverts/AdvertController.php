@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redis;
+
 
 
 class AdvertController extends Controller
@@ -48,7 +48,9 @@ class AdvertController extends Controller
             abort(403);
         }
 
-        return view('adverts.show', compact('advert'));
+        $user = Auth::user();
+
+        return view('adverts.show', compact('advert', 'user'));
     }
 
     public function phone(Advert $advert): string

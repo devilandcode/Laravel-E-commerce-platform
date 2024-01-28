@@ -19,6 +19,11 @@
         {{ session('error') }}
         </div>
     @endif
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     @can ('manage-adverts')
         <div class="d-flex flex-row mb-3">
@@ -122,18 +127,18 @@
             <div class="d-flex flex-row mb-3">
                 <span class="btn btn-success me-1"><span class="fa fa-envelope"></span> Send Message</span>
                 <span class="btn btn-primary phone-button me-1" data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span class="number">Show Phone Number</span></span>
-{{--                @if ($user && $user->hasInFavorites($advert->id))--}}
-{{--                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">--}}
-{{--                        @csrf--}}
-{{--                        @method('DELETE')--}}
-{{--                        <button class="btn btn-secondary"><span class="fa fa-star"></span> Remove from Favorites</button>--}}
-{{--                    </form>--}}
-{{--                @else--}}
-{{--                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">--}}
-{{--                        @csrf--}}
-{{--                        <button class="btn btn-danger"><span class="fa fa-star"></span> Add to Favorites</button>--}}
-{{--                    </form>--}}
-{{--                @endif--}}
+                @if ($user && $user->hasInFavorites($advert->id))
+                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-secondary"><span class="fa fa-star"></span> Remove from Favorites</button>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
+                        @csrf
+                        <button class="btn btn-danger"><span class="fa fa-star"></span> Add to Favorites</button>
+                    </form>
+                @endif
             </div>
 
             <hr/>
