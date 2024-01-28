@@ -40,8 +40,7 @@ Route::group([
     Route::post('/show/{advert}/phone', [AdvertController::class, 'phone'])->name('phone');
     Route::post('/show/{advert}/favorites', [FavoriteController::class, 'add'])->name('favorites');
     Route::delete('/show/{advert}/favorites', [FavoriteController::class, 'remove']);
-//    Route::get('/all/{category?}', [AdvertController::class, 'index'])->name('index.all');
-//    Route::get('/{region?}/{category?}', [AdvertController::class, 'index'])->name('index');
+
 
     Route::get('/{adverts_path?}', [AdvertController::class, 'index'])->name('index')->where('adverts_path', '.+');
 });
