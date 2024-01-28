@@ -27,6 +27,12 @@ class AdvertController extends Controller
         $region = $path->region;
         $category = $path->category;
 
+        $response = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
+
+        $adverts = $response->adverts;
+        $regionsCounts = $response->regionsCounts;
+        $categoriesCounts = $response->categoriesCounts;
+
         $regions = $region
             ? $region->children()->orderBy('name')->getModels()
             : Region::roots()->orderBy('name')->getModels();
@@ -35,10 +41,10 @@ class AdvertController extends Controller
             ? $category->children()->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
-        $adverts = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
 
         return view('adverts.index', compact(
-            'category', 'region', 'categories', 'regions','adverts'));
+            'category', 'region', 'categories', 'regions',
+            'adverts','regionsCounts', 'categoriesCounts'));
     }
 
     public function show(Advert $advert)
