@@ -4,6 +4,9 @@ namespace App\Services\Banners;
 
 
 use App\Http\Requests\Banner\CreateRequest;
+use App\Http\Requests\Banner\EditRequest;
+use App\Http\Requests\Banner\FileRequest;
+use App\Http\Requests\Banner\RejectRequest;
 use App\Models\Adverts\Category;
 use App\Models\Banner\Banner;
 use App\Models\Region;
@@ -11,7 +14,7 @@ use App\Models\User;
 use Elastic\Elasticsearch\Client;
 use Illuminate\Support\Facades\Storage;
 
-class BanerService
+class BannerService
 {
     private $calculator;
     private $client;
