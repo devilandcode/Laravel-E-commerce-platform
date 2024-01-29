@@ -22,21 +22,21 @@ class CreateController extends Controller
     {
         $categories = Category::defaultOrder()->withDepth()->get()->toTree();
 
-        return view('cabinet.banners.create.category', compact('categories'));
+        return view('account.banners.create.category', compact('categories'));
     }
 
     public function region(Category $category, Region $region = null)
     {
         $regions = Region::where('parent_id', $region ? $region->id : null)->orderBy('name')->get();
 
-        return view('cabinet.banners.create.region', compact('category', 'region', 'regions'));
+        return view('account.banners.create.region', compact('category', 'region', 'regions'));
     }
 
     public function banner(Category $category, Region $region = null)
     {
         $formats = Banner::formatsList();
 
-        return view('cabinet.banners.create.banner', compact('category', 'region', 'formats'));
+        return view('account.banners.create.banner', compact('category', 'region', 'formats'));
     }
 
     public function store(CreateRequest $request, Category $category, Region $region = null)
@@ -52,6 +52,6 @@ class CreateController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.banners.show', $banner);
+        return redirect()->route('account.banners.show', $banner);
     }
 }

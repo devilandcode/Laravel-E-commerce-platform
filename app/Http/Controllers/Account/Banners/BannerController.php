@@ -21,22 +21,22 @@ class BannerController extends Controller
     {
         $banners = Banner::forUser(Auth::user())->orderByDesc('id')->paginate(20);
 
-        return view('cabinet.banners.index', compact('banners'));
+        return view('account.banners.index', compact('banners'));
     }
 
     public function show(Banner $banner)
     {
         $this->checkAccess($banner);
-        return view('cabinet.banners.show', compact('banner'));
+        return view('account.banners.show', compact('banner'));
     }
 
     public function editForm(Banner $banner)
     {
         $this->checkAccess($banner);
         if (!$banner->canBeChanged()) {
-            return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Unable to edit.');
+            return redirect()->route('account.banners.show', $banner)->with('error', 'Unable to edit.');
         }
-        return view('cabinet.banners.edit', compact('banner'));
+        return view('account.banners.edit', compact('banner'));
     }
 
     public function edit(EditRequest $request, Banner $banner)
@@ -48,17 +48,17 @@ class BannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.banners.show', $banner);
+        return redirect()->route('account.banners.show', $banner);
     }
 
     public function fileForm(Banner $banner)
     {
         $this->checkAccess($banner);
         if (!$banner->canBeChanged()) {
-            return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Unable to edit.');
+            return redirect()->route('account.banners.show', $banner)->with('error', 'Unable to edit.');
         }
         $formats = Banner::formatsList();
-        return view('cabinet.banners.file', compact('banner', 'formats'));
+        return view('account.banners.file', compact('banner', 'formats'));
     }
 
     public function file(FileRequest $request, Banner $banner)
@@ -70,7 +70,7 @@ class BannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.banners.show', $banner);
+        return redirect()->route('account.banners.show', $banner);
     }
 
     public function send(Banner $banner)
@@ -82,7 +82,7 @@ class BannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.banners.show', $banner);
+        return redirect()->route('account.banners.show', $banner);
     }
 
     public function cancel(Banner $banner)
@@ -94,22 +94,22 @@ class BannerController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('cabinet.banners.show', $banner);
+        return redirect()->route('account.banners.show', $banner);
     }
 
-    public function order(Banner $banner)
-    {
-        $this->checkAccess($banner);
-        try {
-            $banner = $this->service->order($banner->id);
-            $url = $this->robokassa->generateRedirectUrl($banner->id, $banner->cost, 'banner');
-            return redirect($url);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('cabinet.banners.show', $banner);
-    }
+//    public function order(Banner $banner)
+//    {
+//        $this->checkAccess($banner);
+//        try {
+//            $banner = $this->service->order($banner->id);
+//            $url = $this->robokassa->generateRedirectUrl($banner->id, $banner->cost, 'banner');
+//            return redirect($url);
+//        } catch (\DomainException $e) {
+//            return back()->with('error', $e->getMessage());
+//        }
+//
+//        return redirect()->route('account.banners.show', $banner);
+//    }
 
     public function destroy(Banner $banner)
     {
