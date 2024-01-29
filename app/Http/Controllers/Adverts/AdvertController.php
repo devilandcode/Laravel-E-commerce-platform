@@ -3,30 +3,35 @@
 namespace App\Http\Controllers\Adverts;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Adverts\SearchRequest;
 use App\Http\Router\AdvertsPath;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
+use App\Services\Adverts\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 
 
 class AdvertController extends Controller
 {
-    public function index(AdvertsPath $path)
+
+    public function __construct(private SearchService $search)
     {
-        $query = Advert::active()->with(['category', 'region'])->orderByDesc('published_at');
+    }
 
-        if ($category = $path->category) {
-           $query->forCategory($category);
-        }
+    public function index(SearchRequest $request, AdvertsPath $path)
+    {
+        $region = $path->region;
+        $category = $path->category;
 
-        if ($region = $path->region) {
-           $query->forRegion($region);
-        }
+        $response = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
+
+        $adverts = $response->adverts;
+        $regionsCounts = $response->regionsCounts;
+        $categoriesCounts = $response->categoriesCounts;
 
         $regions = $region
             ? $region->children()->orderBy('name')->getModels()
@@ -36,10 +41,17 @@ class AdvertController extends Controller
             ? $category->children()->defaultOrder()->getModels()
             : Category::whereIsRoot()->defaultOrder()->getModels();
 
-        $adverts = $query->paginate(20);
+        $regions = array_filter($regions, function (Region $region) use ($regionsCounts) {
+            return isset($regionsCounts[$region->id]) && $regionsCounts[$region->id] > 0;
+        });
+
+        $categories = array_filter($categories, function (Category $category) use ($categoriesCounts) {
+            return isset($categoriesCounts[$category->id]) && $categoriesCounts[$category->id] > 0;
+        });
 
         return view('adverts.index', compact(
-           'category', 'region', 'categories', 'regions','adverts'));
+            'category', 'region', 'categories', 'regions',
+            'adverts','regionsCounts', 'categoriesCounts'));
     }
 
     public function show(Advert $advert)

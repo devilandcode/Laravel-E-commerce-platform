@@ -82,6 +82,11 @@ Breadcrumbs::for('admin.adverts.adverts.index', function (BreadcrumbTrail $trail
     $trail->push('Categories', route('admin.adverts.adverts.index'));
 });
 
+Breadcrumbs::for('admin.adverts.adverts.edit', function (BreadcrumbTrail $trail, Advert $advert) {
+    $trail->parent('admin.home', $advert);
+    $trail->push($advert->title, route('admin.adverts.adverts.edit', $advert));
+});
+
 
 // Adverts
 Breadcrumbs::for('adverts.inner_region', function (BreadcrumbTrail $trail, AdvertsPath $path) {
@@ -134,6 +139,11 @@ Breadcrumbs::for('account.adverts.index', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('account.adverts.create', function (BreadcrumbTrail $trail) {
     $trail->parent('account.adverts.index');
     $trail->push('Create', route('account.adverts.create'));
+});
+
+Breadcrumbs::for('account.adverts.edit', function (BreadcrumbTrail $trail, Advert $advert) {
+    $trail->parent('adverts.show', $advert);
+    $trail->push('Edit', route('account.adverts.edit', $advert));
 });
 
 Breadcrumbs::for('account.adverts.create.region', function (BreadcrumbTrail $trail, Category $category, Region $region = null) {
