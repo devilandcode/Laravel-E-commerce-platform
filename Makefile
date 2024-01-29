@@ -1,4 +1,4 @@
-docker-up: memory
+docker-up: 
 	docker-compose up -d
 
 docker-down:
