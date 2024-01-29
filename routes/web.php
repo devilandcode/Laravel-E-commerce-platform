@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\Account\Adverts\CreateController;
 use App\Http\Controllers\Account\Adverts\ManageController;
+use App\Http\Controllers\Account\Banners\BannerController;
 use App\Http\Controllers\Adverts\AdvertController;
 use App\Http\Controllers\Adverts\FavoriteController;
 use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController as MyAdvertsController;
 use App\Http\Controllers\Admin\Adverts\AdvertController as AdminAdvertController;
+use App\Http\Controllers\Accoount\Banners\CreateController as BannerCreateController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Admin\Adverts\AttributeController;
@@ -144,6 +146,28 @@ Route::group(
             Route::post('/{advert}/send', [ManageController::class,'send'])->name('send');
             Route::post('/{advert}/close', [ManageController::class,'close'])->name('close');
             Route::delete('/{advert}/destroy', [ManageController::class,'destroy'])->name('destroy');
+        });
+
+        Route::group([
+            'prefix' => 'banners',
+            'as' => 'banners.',
+            'middleware' => [App\Http\Middleware\FilledProfile::class],
+        ], function () {
+            Route::get('/', [BannerController::class, 'index'])->name('index');
+            Route::get('/create', [BannerCreateController::class, 'category'])->name('create');
+            Route::get('/create/region/{category}/{region?}',[BannerCreateController::class, 'region'])->name('create.region');
+            Route::get('/create/banner/{category}/{region?}',[BannerCreateController::class, 'banner'])->name('create.banner');
+            Route::post('/create/banner/{category}/{region?}',[BannerCreateController::class, 'store'])->name('create.banner.store');
+
+            Route::get('/show/{banner}', [BannerController::class, 'show'])->name('show');
+            Route::get('/{banner}/edit', [BannerController::class, 'editForm'])->name('edit');
+            Route::put('/{banner}/edit', [BannerController::class, 'edit']);
+            Route::get('/{banner}/file', [BannerController::class, 'fileForm'])->name('file');
+            Route::put('/{banner}/file', [BannerController::class, 'file']);
+            Route::post('/{banner}/send', [BannerController::class, 'send'])->name('send');
+            Route::post('/{banner}/cancel', [BannerController::class, 'cancel'])->name('cancel');
+            Route::post('/{banner}/order', [BannerController::class, 'order'])->name('order');
+            Route::delete('/{banner}/destroy', [BannerController::class, 'destroy'])->name('destroy');
         });
 
     }

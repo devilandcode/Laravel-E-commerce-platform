@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Account\Banners;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banner\CreateRequest;
 use App\Models\Adverts\Category;
+use App\Models\Banner\Banner;
 use App\Models\Region;
 use App\Services\Banners\BannerService;
 use Illuminate\Http\Request;

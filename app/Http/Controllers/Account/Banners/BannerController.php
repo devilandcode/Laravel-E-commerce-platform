@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Account\Banners;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Banner\EditRequest;
+use App\Http\Requests\Banner\FileRequest;
 use App\Models\Banner\Banner;
+use App\Services\Banners\BannerService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
