@@ -18,7 +18,6 @@ class BannerIndexer
     {
         $this->client->deleteByQuery([
             'index' => 'banners',
-            'type' => 'banner',
             'body' => [
                 'query' => [
                     'match_all' => new \stdClass(),
@@ -40,7 +39,6 @@ class BannerIndexer
 
         $this->client->index([
             'index' => 'banners',
-            'type' => 'banner',
             'id' => $banner->id,
             'body' => [
                 'id' => $banner->id,
@@ -59,7 +57,6 @@ class BannerIndexer
     {
         $this->client->delete([
             'index' => 'banners',
-            'type' => 'banner',
             'id' => $banner->id,
         ]);
     }
