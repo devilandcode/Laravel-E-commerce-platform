@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\Banners\CostCalculator;
 use App\Services\Sms\SmsRu;
 use App\Services\Sms\SmsSenderInterface;
 use GuzzleHttp\Client;
+use Illuminate\Foundation\Application;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,9 +17,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(SmsSenderInterface::class, function($app) {
+        $this->app->singleton(SmsSenderInterface::class, function(Application $app) {
             $config = $app->make('config')->get('sms');
             return new SmsRu(app('GuzzleHttp\Client'), $config['api_id']);
+        });
+
+        $this->app->singleton(CostCalculator::class, function (Application $app) {
+            $config = $app->make('config')->get('banner');
+            return new CostCalculator($config['price']);
         });
     }
 

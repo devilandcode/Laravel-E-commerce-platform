@@ -59,6 +59,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $last_name
  * @property bool $phone_auth
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneAuth($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Advert> $favorites
+ * @property-read int|null $favorites_count
  * @mixin \Eloquent
  */
 class User extends Authenticatable

@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\Account\Adverts\CreateController;
 use App\Http\Controllers\Account\Adverts\ManageController;
+use App\Http\Controllers\Account\Banners\BannerController;
 use App\Http\Controllers\Adverts\AdvertController;
 use App\Http\Controllers\Adverts\FavoriteController;
+use App\Http\Controllers\Account\FavoriteController as AccountAdvertFavoriteController;
 use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController as MyAdvertsController;
 use App\Http\Controllers\Admin\Adverts\AdvertController as AdminAdvertController;
+use App\Http\Controllers\Account\Banners\CreateController as BannerCreateController;
+use App\Http\Controllers\Admin\BannerController as AdminBannerController;
 use App\Http\Controllers\Account\PhoneController;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Admin\Adverts\AttributeController;
@@ -65,37 +69,53 @@ Route::group(
             ], function () {
                 Route::resource('categories', CategoryController::class);
 
-            Route::group(
-                [
-                    'prefix' => 'categories/{category}',
-                    'as' => 'categories.'
-                ], function () {
-                Route::get('/first', [CategoryController::class,'first'])->name('first');
-                Route::get('/up', [CategoryController::class,'up'])->name('up');
-                Route::get('/down', [CategoryController::class,'down'])->name('down');
-                Route::get('/last', [CategoryController::class,'last'])->name('last');
-                Route::resource('attributes', AttributeController::class)->except('index');
-            });
+                Route::group(
+                    [
+                        'prefix' => 'categories/{category}',
+                        'as' => 'categories.'
+                    ], function () {
+                    Route::get('/first', [CategoryController::class,'first'])->name('first');
+                    Route::get('/up', [CategoryController::class,'up'])->name('up');
+                    Route::get('/down', [CategoryController::class,'down'])->name('down');
+                    Route::get('/last', [CategoryController::class,'last'])->name('last');
+                    Route::resource('attributes', AttributeController::class)->except('index');
+                });
 
-            Route::group(
-                [
-                    'prefix' => 'adverts',
-                    'as' => 'adverts.'
-                ], function () {
-                Route::get('/', [AdminAdvertController::class, 'index'])->name('index');
-                Route::get('/{advert}/edit', [AdminAdvertController::class, 'editForm'])->name('edit');
-                Route::put('/{advert}/edit', [AdminAdvertController::class, 'edit']);
-                Route::get('/{advert}/photos', [AdminAdvertController::class, 'photosForm'])->name('photos');
-                Route::post('/{advert}/photos', [AdminAdvertController::class, 'photos']);
-                Route::get('/{advert}/attributes', [AdminAdvertController::class, 'attributesForm'])->name('attributes');
-                Route::post('/{advert}/attributes', [AdminAdvertController::class, 'attributes']);
-                Route::post('/{advert}/moderate', [AdminAdvertController::class, 'moderate'])->name('moderate');
-                Route::get('/{advert}/reject', [AdminAdvertController::class, 'rejectForm'])->name('reject');
-                Route::post('/{advert}/reject', [AdminAdvertController::class, 'reject']);
-                Route::delete('/{advert}/destroy', [AdminAdvertController::class, 'destroy'])->name('destroy');
-            });
+                Route::group(
+                    [
+                        'prefix' => 'adverts',
+                        'as' => 'adverts.'
+                    ], function () {
+                    Route::get('/', [AdminAdvertController::class, 'index'])->name('index');
+                    Route::get('/{advert}/edit', [AdminAdvertController::class, 'editForm'])->name('edit');
+                    Route::put('/{advert}/edit', [AdminAdvertController::class, 'edit']);
+                    Route::get('/{advert}/photos', [AdminAdvertController::class, 'photosForm'])->name('photos');
+                    Route::post('/{advert}/photos', [AdminAdvertController::class, 'photos']);
+                    Route::get('/{advert}/attributes', [AdminAdvertController::class, 'attributesForm'])->name('attributes');
+                    Route::post('/{advert}/attributes', [AdminAdvertController::class, 'attributes']);
+                    Route::post('/{advert}/moderate', [AdminAdvertController::class, 'moderate'])->name('moderate');
+                    Route::get('/{advert}/reject', [AdminAdvertController::class, 'rejectForm'])->name('reject');
+                    Route::post('/{advert}/reject', [AdminAdvertController::class, 'reject']);
+                    Route::delete('/{advert}/destroy', [AdminAdvertController::class, 'destroy'])->name('destroy');
+                });
             }
         );
+
+        Route::group(
+            [
+                'prefix' => 'banners',
+                'as' => 'banners.'
+            ], function () {
+            Route::get('/', [AdminBannerController::class, 'index'])->name('index');
+            Route::get('/{banner}/show',[AdminBannerController::class, 'show'] )->name('show');
+            Route::get('/{banner}/edit',[AdminBannerController::class, 'editForm'])->name('edit');
+            Route::put('/{banner}/edit', [AdminBannerController::class, 'edit']);
+            Route::post('/{banner}/moderate', [AdminBannerController::class, 'moderate'])->name('moderate');
+            Route::get('/{banner}/reject',[AdminBannerController::class, 'rejectForm'])->name('reject');
+            Route::post('/{banner}/reject',[AdminBannerController::class, 'reject']);
+            Route::post('/{banner}/pay',[AdminBannerController::class, 'pay'])->name('pay');
+            Route::delete('/{banner}/destroy',[AdminBannerController::class, 'destroy'])->name('destroy');
+        });
     }
 );
 
@@ -144,6 +164,31 @@ Route::group(
             Route::post('/{advert}/send', [ManageController::class,'send'])->name('send');
             Route::post('/{advert}/close', [ManageController::class,'close'])->name('close');
             Route::delete('/{advert}/destroy', [ManageController::class,'destroy'])->name('destroy');
+        });
+
+        Route::get('favorites', 'FavoriteController@index')->name('favorites.index');
+        Route::delete('favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
+
+        Route::group([
+            'prefix' => 'banners',
+            'as' => 'banners.',
+            'middleware' => [App\Http\Middleware\FilledProfile::class],
+        ], function () {
+            Route::get('/', [BannerController::class, 'index'])->name('index');
+            Route::get('/create', [BannerCreateController::class, 'category'])->name('create');
+            Route::get('/create/region/{category}/{region?}',[BannerCreateController::class, 'region'])->name('create.region');
+            Route::get('/create/banner/{category}/{region?}',[BannerCreateController::class, 'banner'])->name('create.banner');
+            Route::post('/create/banner/{category}/{region?}',[BannerCreateController::class, 'store'])->name('create.banner.store');
+
+            Route::get('/show/{banner}', [BannerController::class, 'show'])->name('show');
+            Route::get('/{banner}/edit', [BannerController::class, 'editForm'])->name('edit');
+            Route::put('/{banner}/edit', [BannerController::class, 'edit']);
+            Route::get('/{banner}/file', [BannerController::class, 'fileForm'])->name('file');
+            Route::put('/{banner}/file', [BannerController::class, 'file']);
+            Route::post('/{banner}/send', [BannerController::class, 'send'])->name('send');
+            Route::post('/{banner}/cancel', [BannerController::class, 'cancel'])->name('cancel');
+            Route::post('/{banner}/order', [BannerController::class, 'order'])->name('order');
+            Route::delete('/{banner}/destroy', [BannerController::class, 'destroy'])->name('destroy');
         });
 
     }

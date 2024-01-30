@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('cabinet.favorites._nav')
+    @include('account.favorites._nav')
 
     <table class="table table-striped">
         <thead>
@@ -28,7 +28,7 @@
                 </td>
                 <td>{{ $advert->category->name }}</td>
                 <td>
-                    <form method="POST" action="{{ route('cabinet.favorites.remove', $advert) }}" class="mr-1">
+                    <form method="POST" action="{{ route('account.favorites.remove', $advert) }}" class="mr-1">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-sm btn-danger"><span class="fa fa-remove"></span> Remove</button>

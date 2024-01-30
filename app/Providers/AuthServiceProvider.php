@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Adverts\Advert\Advert;
+use App\Models\Banner\Banner;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -52,6 +53,14 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('manage-adverts-categories', function (User $user) {
+            return $user->isAdmin() || $user->isModerator();
+        });
+
+        Gate::define('manage-own-banner', function (User $user, Banner $banner) {
+            return $banner->user_id === $user->id;
+        });
+
+        Gate::define('manage-banners', function (User $user) {
             return $user->isAdmin() || $user->isModerator();
         });
     }
