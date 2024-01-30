@@ -6,26 +6,26 @@
     <div class="d-flex flex-row mb-3">
 
         @if ($banner->canBeChanged())
-            <a href="{{ route('account.banners.edit', $banner) }}" class="btn btn-primary mr-1">Edit</a>
-            <a href="{{ route('account.banners.file', $banner) }}" class="btn btn-primary mr-1">Change File</a>
+            <a href="{{ route('account.banners.edit', $banner) }}" class="btn btn-primary me-1">Edit</a>
+            <a href="{{ route('account.banners.file', $banner) }}" class="btn btn-primary me-1">Change File</a>
         @endif
 
         @if ($banner->isDraft())
-            <form method="POST" action="{{ route('account.banners.send', $banner) }}" class="mr-1">
+            <form method="POST" action="{{ route('account.banners.send', $banner) }}" class="me-1">
                 @csrf
                 <button class="btn btn-success">Send to Moderation</button>
             </form>
         @endif
 
         @if ($banner->isOnModeration())
-            <form method="POST" action="{{ route('account.banners.cancel', $banner) }}" class="mr-1">
+            <form method="POST" action="{{ route('account.banners.cancel', $banner) }}" class="me-1">
                 @csrf
                 <button class="btn btn-secondary">Cancel Moderation</button>
             </form>
         @endif
 
         @if ($banner->isModerated())
-            <form method="POST" action="{{ route('account.banners.order', $banner) }}" class="mr-1">
+            <form method="POST" action="{{ route('account.banners.order', $banner) }}" class="me-1">
                 @csrf
                 <button class="btn btn-success">Order for Payment</button>
             </form>
@@ -66,17 +66,17 @@
             <th>Status</th>
             <td>
                 @if ($banner->isDraft())
-                    <span class="badge badge-secondary">Draft</span>
+                    <span class="badge text-bg-secondary">Draft</span>
                 @elseif ($banner->isOnModeration())
-                    <span class="badge badge-primary">Moderation</span>
+                    <span class="badge text-bg-warning">Moderation</span>
                 @elseif ($banner->isModerated())
-                    <span class="badge badge-success">Ready to Payment</span>
+                    <span class="badge text-bg-success">Ready to Payment</span>
                 @elseif ($banner->isOrdered())
-                    <span class="badge badge-warning">Waiting for Payment</span>
+                    <span class="badge text-bg-warning">Waiting for Payment</span>
                 @elseif ($banner->isActive())
-                    <span class="badge badge-primary">Active</span>
+                    <span class="badge text-bg-success">Active</span>
                 @elseif ($banner->isClosed())
-                    <span class="badge badge-secondary">Closed</span>
+                    <span class="badge text-bg-danger">Closed</span>
                 @endif
             </td>
         </tr>
@@ -101,7 +101,8 @@
 
     <div class="card">
         <div class="card-body">
-            <img src="{{ Storage::disk('public')->url($banner->file) }}" />
+
+            <img src="{{ asset('storage/' . $banner->file ) }}" />
         </div>
     </div>
 @endsection

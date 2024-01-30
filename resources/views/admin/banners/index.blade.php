@@ -81,17 +81,17 @@
                 <td>{{ $banner->category->id }} - {{ $banner->category->name }}</td>
                 <td>
                     @if ($banner->isDraft())
-                        <span class="badge badge-secondary">Draft</span>
+                        <span class="badge text-bg-secondary">Draft</span>
                     @elseif ($banner->isOnModeration())
-                        <span class="badge badge-primary">Moderation</span>
+                        <span class="badge text-bg-warning">Moderation</span>
                     @elseif ($banner->isModerated())
-                        <span class="badge badge-success">Ready to Payment</span>
+                        <span class="badge text-bg-success">Ready to Payment</span>
                     @elseif ($banner->isOrdered())
-                        <span class="badge badge-warning">Waiting for Payment</span>
+                        <span class="badge text-bg-warning">Waiting for Payment</span>
                     @elseif ($banner->isActive())
-                        <span class="badge badge-primary">Active</span>
+                        <span class="badge text-bg-success">Active</span>
                     @elseif ($banner->isClosed())
-                        <span class="badge badge-secondary">Closed</span>
+                        <span class="badge text-bg-danger">Closed</span>
                     @endif
                 </td>
             </tr>

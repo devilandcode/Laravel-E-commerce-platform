@@ -59,5 +59,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-own-banner', function (User $user, Banner $banner) {
             return $banner->user_id === $user->id;
         });
+
+        Gate::define('manage-banners', function (User $user) {
+            return $user->isAdmin() || $user->isModerator();
+        });
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\Banner\EditRequest;
 use App\Http\Requests\Banner\FileRequest;
 use App\Models\Banner\Banner;
 use App\Services\Banners\BannerService;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -27,6 +28,7 @@ class BannerController extends Controller
     public function show(Banner $banner)
     {
         $this->checkAccess($banner);
+
         return view('account.banners.show', compact('banner'));
     }
 

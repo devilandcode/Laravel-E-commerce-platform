@@ -6,10 +6,56 @@ use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
+
+/**
+ * App\Models\Banner\Banner
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $category_id
+ * @property int|null $region_id
+ * @property string $name
+ * @property int|null $views
+ * @property int $limit
+ * @property int|null $clicks
+ * @property int|null $cost
+ * @property string $url
+ * @property string $format
+ * @property string $file
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $published_at
+ * @property-read Category|null $category
+ * @property-read Region|null $region
+ * @property-read User|null $user
+ * @method static Builder|Banner active()
+ * @method static Builder|Banner forUser(\App\Models\User $user)
+ * @method static Builder|Banner newModelQuery()
+ * @method static Builder|Banner newQuery()
+ * @method static Builder|Banner query()
+ * @method static Builder|Banner whereCategoryId($value)
+ * @method static Builder|Banner whereClicks($value)
+ * @method static Builder|Banner whereCost($value)
+ * @method static Builder|Banner whereCreatedAt($value)
+ * @method static Builder|Banner whereFile($value)
+ * @method static Builder|Banner whereFormat($value)
+ * @method static Builder|Banner whereId($value)
+ * @method static Builder|Banner whereLimit($value)
+ * @method static Builder|Banner whereName($value)
+ * @method static Builder|Banner wherePublishedAt($value)
+ * @method static Builder|Banner whereRegionId($value)
+ * @method static Builder|Banner whereStatus($value)
+ * @method static Builder|Banner whereUpdatedAt($value)
+ * @method static Builder|Banner whereUrl($value)
+ * @method static Builder|Banner whereUserId($value)
+ * @method static Builder|Banner whereViews($value)
+ * @mixin \Eloquent
+ */
 class Banner extends Model
 {
     use HasFactory;

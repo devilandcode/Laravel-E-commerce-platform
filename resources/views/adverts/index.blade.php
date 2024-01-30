@@ -89,7 +89,7 @@
 
             {{ $adverts->links() }}
         </div>
-        <div class="col-md-3" style="background-color: gray; height: 400px">
+        <div class="col-md-3">
             <div
                 class="banner mb-3 bg-secondary"
 {{--                data-url="{{ route('banner.get') }}"--}}

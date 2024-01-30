@@ -17,13 +17,11 @@ use Illuminate\Support\Facades\Storage;
 
 class BannerService
 {
-    private $calculator;
-    private $client;
-
-    public function __construct(CostCalculator $calculator, Client $client)
+    public function __construct(
+        private Client $client,
+        private CostCalculator $calculator,
+    )
     {
-        $this->calculator = $calculator;
-        $this->client = $client;
     }
 
     public function getRandomForView(?int $categoryId, ?int $regionId, $format): ?Banner
