@@ -4,7 +4,7 @@ namespace App\Models\Adverts\Advert;
 
 use App\Models\Adverts\Category;
 use App\Models\Region;
-use App\Models\User;
+use App\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,10 +37,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Adverts\Advert\Value> $values
  * @property-read int|null $values_count
  * @method static \Illuminate\Database\Eloquent\Builder|Advert active()
- * @method static \Illuminate\Database\Eloquent\Builder|Advert favoredByUser(\App\Models\User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert favoredByUser(\App\Models\User\User $user)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert forCategory(\App\Models\Adverts\Category $category)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert forRegion(\App\Models\Region $region)
- * @method static \Illuminate\Database\Eloquent\Builder|Advert forUser(\App\Models\User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder|Advert forUser(\App\Models\User\User $user)
  * @method static \Illuminate\Database\Eloquent\Builder|Advert newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Advert newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Advert query()

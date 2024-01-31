@@ -35,6 +35,9 @@ Route::get('/verify/{token}', [RegisterController::class, 'verify'])->name('regi
 Route::get('/login/phone', [LoginController::class, 'phone'])->name('login.phone');
 Route::post('/login/phone', [LoginController::class, 'verify']);
 
+Route::get('/login/{network}', 'Auth\NetworkController@redirect')->name('login.network');
+Route::get('/login/{network}/callback', 'Auth\NetworkController@callback');
+
 //Route::get('/ajax/regions', [AjaxRegionController::class, 'get'])->name('ajax.regions');
 
 Route::get('/banner/get', [ClickBannerController::class, 'get'])->name('banner.get');

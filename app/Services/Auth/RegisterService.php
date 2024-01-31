@@ -4,7 +4,7 @@ namespace App\Services\Auth;
 
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Mail\Auth\VerifyMail;
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherInterface;
 use Illuminate\Contracts\Mail\Mailer as MailerInterface;

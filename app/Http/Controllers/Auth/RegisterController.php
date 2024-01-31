@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Controllers\Controller;
-use App\Mail\Auth\VerifyMail;
-use App\Models\User;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User\User;
 use App\Services\Auth\RegisterService;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
