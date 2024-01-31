@@ -82,16 +82,16 @@
                 <div class="card-body">
                     <ul class="list-unstyled">
                         <li>
-                            <a href="{{ route('login.network', ['network' => 'facebook']) }}"><span class="fa fa-facebook-square"></span> Facebook</a>
+                            <a href="{{ route('login.network', ['network' => 'facebook']) }}" target="_blank"><span class="fa fa-facebook-square"></span> Facebook</a>
                         </li>
                         <li>
-                            <a href="{{ route('login.network', ['network' => 'twitter']) }}"><span class="fa fa-twitter-square"></span> Twitter</a>
+                            <a href="{{ route('login.network', ['network' => 'twitter']) }}" target="_blank"><span class="fa fa-twitter-square"></span> Twitter</a>
                         </li>
                         <li>
-                            <a href="{{ route('login.network', ['network' => 'google']) }}"><span class="fa fa-twitter-square"></span> Google</a>
+                            <a href="{{ route('login.network', ['network' => 'google']) }}" target="_blank"><span class="fa fa-twitter-square"></span> Google</a>
                         </li>
                         <li>
-                            <a href="{{ route('login.network', ['network' => 'github']) }}"><span class="fa fa-twitter-square"></span> Github</a>
+                            <a href="{{ route('login.network', ['network' => 'github']) }}" target="_blank"><span class="fa fa-twitter-square"></span> Github</a>
                         </li>
                     </ul>
                 </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\Adverts\CreateController;
 use App\Http\Controllers\Account\Adverts\ManageController;
 use App\Http\Controllers\Account\Banners\BannerController;
+use App\Http\Controllers\Auth\NetworkController;
 use App\Http\Controllers\BannerController as ClickBannerController;
 use App\Http\Controllers\Adverts\AdvertController;
 use App\Http\Controllers\Adverts\FavoriteController;
@@ -35,8 +36,8 @@ Route::get('/verify/{token}', [RegisterController::class, 'verify'])->name('regi
 Route::get('/login/phone', [LoginController::class, 'phone'])->name('login.phone');
 Route::post('/login/phone', [LoginController::class, 'verify']);
 
-Route::get('/login/{network}', 'Auth\NetworkController@redirect')->name('login.network');
-Route::get('/login/{network}/callback', 'Auth\NetworkController@callback');
+Route::get('/login/{network}', [NetworkController::class, 'redirect'])->name('login.network');
+Route::get('/login/{network}/callback', [NetworkController::class, 'callback']);
 
 //Route::get('/ajax/regions', [AjaxRegionController::class, 'get'])->name('ajax.regions');
 
