@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
-use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\User\User;
 use App\Services\Auth\RegisterService;
 use Illuminate\Http\Request;
 

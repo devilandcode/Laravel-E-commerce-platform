@@ -4,7 +4,7 @@ namespace App\Models\Banner;
 
 use App\Models\Adverts\Category;
 use App\Models\Region;
-use App\Models\User;
+use App\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read Region|null $region
  * @property-read User|null $user
  * @method static Builder|Banner active()
- * @method static Builder|Banner forUser(\App\Models\User $user)
+ * @method static Builder|Banner forUser(\App\Models\User\User $user)
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()
  * @method static Builder|Banner query()

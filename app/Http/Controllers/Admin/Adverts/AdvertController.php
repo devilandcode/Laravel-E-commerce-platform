@@ -8,7 +8,7 @@ use App\Http\Requests\Adverts\EditRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use App\Models\Adverts\Advert\Advert;
-use App\Models\User;
+use App\Models\User\User;
 use App\Services\Adverts\AdvertService;
 use Illuminate\Http\Request;
 

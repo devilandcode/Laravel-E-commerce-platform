@@ -10,7 +10,7 @@ use App\Http\Requests\Adverts\RejectRequest;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
-use App\Models\User;
+use App\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 

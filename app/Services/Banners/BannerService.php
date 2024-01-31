@@ -10,7 +10,7 @@ use App\Http\Requests\Banner\RejectRequest;
 use App\Models\Adverts\Category;
 use App\Models\Banner\Banner;
 use App\Models\Region;
-use App\Models\User;
+use App\Models\User\User;
 use Carbon\Carbon;
 use Elastic\Elasticsearch\Client;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +28,6 @@ class BannerService
     {
         $response = $this->client->search([
             'index' => 'banners',
-            'type' => 'banner',
             'body' => [
                 '_source' => ['id'],
                 'size' => 5,
@@ -44,7 +43,7 @@ class BannerService
                         'must' => [
                             ['term' => ['status' => Banner::STATUS_ACTIVE]],
                             ['term' => ['format' => $format ?: '']],
-                            ['term' => ['categories' => [$categoryId, 0] ?: 0]],
+                            ['term' => ['categories' => $categoryId ?: 0]],
                             ['term' => ['regions' => $regionId ?: 0]],
                         ],
                     ],

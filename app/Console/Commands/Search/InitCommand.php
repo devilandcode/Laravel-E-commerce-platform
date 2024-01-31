@@ -17,7 +17,15 @@ class InitCommand extends Command
         parent::__construct();
     }
 
-    public function handle(): void
+    public function handle(): bool
+    {
+        $this->initAdverts();
+        $this->initBanners();
+
+        return true;
+    }
+
+    private function initAdverts(): void
     {
         try {
             $this->client->indices()->delete([
@@ -111,6 +119,41 @@ class InitCommand extends Command
                                     'trigrams',
                                 ],
                             ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    private function initBanners(): void
+    {
+        try {
+            $this->client->indices()->delete([
+                'index' => 'banners'
+            ]);
+        } catch (\Exception $e) {
+        }
+
+        $this->client->indices()->create([
+            'index' => 'banners',
+            'body' => [
+                'mappings' => [
+                    'properties' => [
+                        'id' => [
+                            'type' => 'integer',
+                        ],
+                        'status' => [
+                            'type' => 'keyword',
+                        ],
+                        'format' => [
+                            'type' => 'keyword',
+                        ],
+                        'categories' => [
+                            'type' => 'integer',
+                        ],
+                        'regions' => [
+                            'type' => 'integer',
                         ],
                     ],
                 ],

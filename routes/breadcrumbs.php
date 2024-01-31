@@ -10,12 +10,12 @@ use App\Http\Router\AdvertsPath;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
-use App\Models\User;
+use App\Models\User\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
+use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
 //  with `$trail`. This is nice for IDE type checking and completion.
-use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 
 // Home

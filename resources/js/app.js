@@ -9,6 +9,29 @@ $(document).on('click', '.phone-button', function () {
     });
 });
 
+$('.banner').each(function () {
+    var block = $(this);
+    var url = block.data('url');
+    var format = block.data('format');
+    var category = block.data('category');
+    var region = block.data('region');
+
+    axios
+        .get(url, {params: {
+                format: format,
+                category: category,
+                region: region
+            }})
+        .then(function (response) {
+            block.html(response.data);
+            console.log(response.data)
+            console.log(block)
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+});
+
 
 // $('.region-selector').each(function () {
 //     let block = $(this);

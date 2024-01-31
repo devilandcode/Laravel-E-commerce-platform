@@ -5,8 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Banner\Banner;
-use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Models\User\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 

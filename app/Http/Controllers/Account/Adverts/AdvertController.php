@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account\Adverts;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\FilledProfile;
 use App\Models\Adverts\Advert\Advert;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdvertController extends Controller
