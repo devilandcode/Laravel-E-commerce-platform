@@ -6,6 +6,7 @@ namespace App\Models\User;
 
 use App\Models\Adverts\Advert\Advert;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\User\Network;
+use Laravel\Socialite\Contracts\User as NetworkUser;
 
 /**
  * App\Models\User
@@ -105,6 +107,24 @@ class User extends Authenticatable
             'verify_token' => Str::uuid(),
             'status' => self::STATUS_WAIT,
         ]);
+    }
+
+    public static function registerByNetwork(string $network, NetworkUser $data): self
+    {
+        $user = static::create([
+            'name' => $data->getId(),
+            'email' => $data->getEmail(),
+            'password' => null,
+            'verify_token' => null,
+            'role' => self::ROLE_USER,
+            'status' => self::STATUS_ACTIVE,
+        ]);
+        $user->networks()->create([
+            'network' => $network,
+            'identity' => $data->getId(),
+
+        ]);
+        return $user;
     }
 
     public static function new($name, $email): self
@@ -211,7 +231,7 @@ class User extends Authenticatable
 
     public function hasFilledProfile(): bool
     {
-        return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
+        return !empty($this->name) || !empty($this->last_name) || $this->isPhoneVerified();
     }
 
     public function isPhoneAuthEnabled(): bool
@@ -260,5 +280,12 @@ class User extends Authenticatable
     public function networks()
     {
         return $this->hasMany(Network::class, 'user_id', 'id');
+    }
+
+    public function scopeByNetwork(Builder $query, string $network, string $identity): Builder
+    {
+        return $query->whereHas('networks', function(Builder $query) use ($network, $identity) {
+            $query->where('network', $network)->where('identity', $identity);
+        });
     }
 }
