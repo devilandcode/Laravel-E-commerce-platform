@@ -93,6 +93,12 @@
                         <li>
                             <a href="{{ route('login.network', ['network' => 'github']) }}" target="_blank"><span class="fa fa-twitter-square"></span> Github</a>
                         </li>
+                        <li>
+                            <a href="{{ route('login.network', ['network' => 'yandex']) }}" target="_blank"><span class="fa fa-twitter-square"></span> Yandex</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('login.network', ['network' => 'vkontakte']) }}" target="_blank"><span class="fa fa-twitter-square"></span> Vkontakte</a>
+                        </li>
                     </ul>
                 </div>
             </div>

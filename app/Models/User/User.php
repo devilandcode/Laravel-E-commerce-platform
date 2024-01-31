@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\User\Network;
+use Laravel\Socialite\Contracts\User as NetworkUser;
 
 /**
  * App\Models\User
@@ -108,11 +109,11 @@ class User extends Authenticatable
         ]);
     }
 
-    public static function registerByNetwork(string $network, string $identity): self
+    public static function registerByNetwork(string $network, NetworkUser $data): self
     {
         $user = static::create([
-            'name' => $identity,
-            'email' => null,
+            'name' => $data->getId(),
+            'email' => $data->getEmail(),
             'password' => null,
             'verify_token' => null,
             'role' => self::ROLE_USER,
@@ -120,7 +121,8 @@ class User extends Authenticatable
         ]);
         $user->networks()->create([
             'network' => $network,
-            'identity' => $identity,
+            'identity' => $data->getId(),
+
         ]);
         return $user;
     }
@@ -229,7 +231,7 @@ class User extends Authenticatable
 
     public function hasFilledProfile(): bool
     {
-        return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
+        return !empty($this->name) || !empty($this->last_name) || $this->isPhoneVerified();
     }
 
     public function isPhoneAuthEnabled(): bool

@@ -25,7 +25,6 @@ class NetworkController extends Controller
     public function callback(string $network)
     {
         $data = Socialite::driver($network)->user();
-        dd($data);
         try {
             $user = $this->service->auth($network, $data);
             Auth::login($user);

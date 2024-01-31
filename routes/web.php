@@ -156,6 +156,7 @@ Route::group(
             [
                 'prefix' => 'adverts',
                 'as' => 'adverts.',
+                'middleware' => [App\Http\Middleware\FilledProfile::class],
             ], function () {
             Route::get('/', [MyAdvertsController::class, 'index'])->name('index');
             Route::get('/create', [CreateController::class, 'category'])->name('create');

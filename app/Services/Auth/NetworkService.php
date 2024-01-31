@@ -16,11 +16,11 @@ class NetworkService
         }
 
         if ($data->getEmail() && $user = User::where('email', $data->getEmail())->exists()) {
-            throw new \DomainException( );
+            throw new \DomainException('User with this email is already registered.');
         }
 
         $user = DB::transaction(function () use ($network, $data) {
-            return User::registerByNetwork($network, $data->getId());
+            return User::registerByNetwork($network, $data);
         });
 
         event(new Registered($user));
