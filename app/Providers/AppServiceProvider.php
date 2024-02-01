@@ -26,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
             $config = $app->make('config')->get('banner');
             return new CostCalculator($config['price']);
         });
+
+        if ($this->app->environment('local')) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**
