@@ -17,7 +17,8 @@ class ProfileController extends Controller
 
     public function show(Request $request)
     {
-        return new ProfileResource($request->user());
+
+        return ProfileResource::make($request->user());
     }
 
     public function update(ProfileEditRequest $request)
@@ -25,6 +26,6 @@ class ProfileController extends Controller
         $this->service->edit($request->user()->id, $request);
 
         $user = User::findOrFail($request->user()->id);
-        return new ProfileResource($user);
+        return ProfileResource::make($user);
     }
 }

@@ -12,8 +12,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Laravel\Sanctum\HasApiTokens;
+
 use App\Models\User\Network;
+use Laravel\Passport\HasApiTokens;
 use Laravel\Socialite\Contracts\User as NetworkUser;
 
 /**
@@ -287,5 +288,10 @@ class User extends Authenticatable
         return $query->whereHas('networks', function(Builder $query) use ($network, $identity) {
             $query->where('network', $network)->where('identity', $identity);
         });
+    }
+
+    public function findForPassport($identifier)
+    {
+        return self::where('email', $identifier)->where('status', self::STATUS_ACTIVE)->first();
     }
 }

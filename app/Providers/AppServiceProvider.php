@@ -19,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(SmsSenderInterface::class, function(Application $app) {
             $config = $app->make('config')->get('sms');
-            return new SmsRu(app('GuzzleHttp\Client'), $config['api_id']);
+            $driver = $config['driver'];
+            return new SmsRu(app('GuzzleHttp\Client'), $config['drivers'][$driver]['api_id']);
         });
 
         $this->app->singleton(CostCalculator::class, function (Application $app) {
