@@ -33,13 +33,11 @@ class AdvertController extends Controller
         $regionsCounts = $response->regionsCounts;
         $categoriesCounts = $response->categoriesCounts;
 
-        $regions = $region
-            ? $region->children()->orderBy('name')->getModels()
-            : Region::roots()->orderBy('name')->getModels();
+        $query = $region ? $region->children() : Region::roots();
+        $regions = $query->orderBy('name')->getModels();
 
-        $categories = $category
-            ? $category->children()->defaultOrder()->getModels()
-            : Category::whereIsRoot()->defaultOrder()->getModels();
+        $query = $category ? $category->children() : Category::whereIsRoot();
+        $categories = $query->defaultOrder()->getModels();
 
         $regions = array_filter($regions, function (Region $region) use ($regionsCounts) {
             return isset($regionsCounts[$region->id]) && $regionsCounts[$region->id] > 0;

@@ -17,7 +17,6 @@ class ProfileController extends Controller
 
     public function show(Request $request)
     {
-
         return ProfileResource::make($request->user());
     }
 

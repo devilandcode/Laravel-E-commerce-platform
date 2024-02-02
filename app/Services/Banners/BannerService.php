@@ -72,7 +72,7 @@ class BannerService
     public function create(User $user, Category $category, ?Region $region, CreateRequest $request): Banner
     {
         /** @var Banner $banner */
-        $banner = Banner::make([
+        $banner = Banner::make([   /** @phpstan-ignore-line */
             'name' => $request['name'],
             'limit' => $request['limit'],
             'url' => $request['url'],

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 /**
@@ -27,9 +28,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $format
  * @property string $file
  * @property string $status
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $published_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Carbon $published_at
  * @property-read Category|null $category
  * @property-read Region|null $region
  * @property-read User|null $user
@@ -171,12 +172,12 @@ class Banner extends Model
         ]);
     }
 
-    public function getWidth(): int
+    public function getWidth(): string
     {
         return explode('x', $this->format)[0];
     }
 
-    public function getHeight(): int
+    public function getHeight(): string
     {
         return explode('x', $this->format)[1];
     }
@@ -221,17 +222,22 @@ class Banner extends Model
         return $this->status === self::STATUS_CLOSED;
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function category()
+    public function scopeForUser(Builder $query, User $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function region()
+    public function region(): BelongsTo
     {
         return $this->belongsTo(Region::class, 'region_id', 'id');
     }
@@ -239,11 +245,6 @@ class Banner extends Model
     public function scopeActive(Builder $query)
     {
         return $query->where('status', self::STATUS_ACTIVE);
-    }
-
-    public function scopeForUser(Builder $query, User $user)
-    {
-        return $query->where('user_id', $user->id);
     }
 
     private function assertIsActive(): void

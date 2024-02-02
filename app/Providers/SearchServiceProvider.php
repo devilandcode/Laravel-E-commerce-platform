@@ -15,10 +15,9 @@ class SearchServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(Client::class, function (Application $app) {
-            $config = $app->make('config')->get('elasticsearch');
             return ClientBuilder::create()
-                ->setHosts($config['hosts'])
-                ->setRetries($config['retries'])
+                ->setHosts(['127.0.0.1:9200'])
+                ->setRetries(3)
                 ->build();
         });
     }

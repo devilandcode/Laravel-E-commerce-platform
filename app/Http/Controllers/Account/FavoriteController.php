@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Adverts\Advert\Advert;
+use App\Services\Adverts\FavoriteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
-    public function __construct(FavoriteService $service)
+    public function __construct(private FavoriteService $service)
     {
-        $this->service = $service;
         $this->middleware('auth');
     }
 

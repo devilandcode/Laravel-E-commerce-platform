@@ -28,7 +28,7 @@ class AdvertService
         return DB::transaction(function () use ($request, $user, $category, $region) {
 
             /** @var Advert $advert */
-            $advert = Advert::make([
+            $advert = Advert::make([   /** @phpstan-ignore-line */
                 'title' => $request['title'],
                 'content' => $request['content'],
                 'price' => $request['price'],

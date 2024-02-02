@@ -72,13 +72,11 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Kalnoy\Nestedset\QueryBuilder|Category withoutRoot()
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Adverts\Attribute> $attributes
  * @property-read int|null $attributes_count
- * @method static \Kalnoy\Nestedset\Collection<int, static> all($columns = ['*'])
- * @method static \Kalnoy\Nestedset\Collection<int, static> get($columns = ['*'])
  * @mixin \Eloquent
  */
 class Category extends Model
 {
-    use NodeTrait,HasFactory;
+    use NodeTrait, HasFactory;
 
     protected $table = 'advert_categories';
 

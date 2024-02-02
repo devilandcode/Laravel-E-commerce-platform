@@ -79,6 +79,7 @@ class CategoryController extends Controller
 
     public function first(Category $category)
     {
+        /** @var Category $first */
         if ($first = $category->siblings()->defaultOrder()->first()) {
             $category->insertBeforeNode($first);
         }
@@ -102,6 +103,7 @@ class CategoryController extends Controller
 
     public function last(Category $category)
     {
+        /** @var Category $last */
         if ($last = $category->siblings()->defaultOrder('desc')->first()) {
             $category->insertAfterNode($last);
         }
