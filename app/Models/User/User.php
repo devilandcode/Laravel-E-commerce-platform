@@ -12,8 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
-use App\Models\User\Network;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Socialite\Contracts\User as NetworkUser;
 
@@ -35,7 +33,7 @@ use Laravel\Socialite\Contracts\User as NetworkUser;
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\User\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -52,7 +50,7 @@ use Laravel\Socialite\Contracts\User as NetworkUser;
  * @property string|null $phone
  * @property bool $phone_verified
  * @property string|null $phone_verify_token
- * @property \Illuminate\Support\Carbon|null $phone_verify_token_expire
+ * @property Carbon $phone_verify_token_expire
  * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneVerified($value)

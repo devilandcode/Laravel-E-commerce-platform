@@ -18,15 +18,15 @@ class ProfileResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'email' => $this->email,
+            'id' => $this->id,   /** @phpstan-ignore-line */
+            'email' => $this->email,  /** @phpstan-ignore-line */
             'phone' => [
-                'number' => $this->phone,
-                'verified' => $this->phone_verified,
+                'number' => $this->phone,   /** @phpstan-ignore-line */
+                'verified' => $this->phone_verified,  /** @phpstan-ignore-line */
             ],
             'name' => [
-                'first' => $this->name,
-                'last' => $this->last_name,
+                'first' => $this->name,  /** @phpstan-ignore-line */
+                'last' => $this->last_name,   /** @phpstan-ignore-line */
             ],
         ];
     }

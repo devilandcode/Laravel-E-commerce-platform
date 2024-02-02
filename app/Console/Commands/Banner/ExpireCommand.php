@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Banner;
 
+use App\Mail\Banner\BannerExpiresSoonMail;
 use App\Models\Banner\Banner;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;

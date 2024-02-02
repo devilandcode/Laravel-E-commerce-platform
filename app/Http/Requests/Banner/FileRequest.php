@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Banner;
 
-use App\Entity\Banner\Banner;
+use App\Models\Banner\Banner;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class FileRequest extends FormRequest
 {

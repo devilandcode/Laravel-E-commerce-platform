@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\NetworkController;
 use App\Http\Controllers\BannerController as ClickBannerController;
 use App\Http\Controllers\Adverts\AdvertController;
 use App\Http\Controllers\Adverts\FavoriteController;
+use App\Http\Controllers\Account\FavoriteController as AccountFavoriteController;
 use App\Http\Controllers\Account\FavoriteController as AccountAdvertFavoriteController;
 use App\Http\Controllers\Ajax\RegionController as AjaxRegionController;
 use App\Http\Controllers\Account\Adverts\AdvertController as MyAdvertsController;
@@ -175,8 +176,8 @@ Route::group(
             Route::delete('/{advert}/destroy', [ManageController::class,'destroy'])->name('destroy');
         });
 
-        Route::get('favorites', 'FavoriteController@index')->name('favorites.index');
-        Route::delete('favorites/{advert}', 'FavoriteController@remove')->name('favorites.remove');
+        Route::get('favorites', [AccountFavoriteController::class, 'index'])->name('favorites.index');
+        Route::delete('favorites/{advert}', [AccountFavoriteController::class, 'remove'])->name('favorites.remove');
 
         Route::group([
             'prefix' => 'banners',

@@ -9,9 +9,8 @@ use Elastic\Elasticsearch\Client;
 
 class BannerIndexer
 {
-    public function __construct(Client $client)
+    public function __construct(private Client $client)
     {
-        $this->client = $client;
     }
 
     public function clear(): void
