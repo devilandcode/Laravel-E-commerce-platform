@@ -30,7 +30,6 @@ Route::middleware(['auth', 'can:admin-panel'])
             Route::resource('attributes', AttributeController::class)->except('index');
 
             Route::controller(CategoryController::class)->group(function() {
-
                 Route::get('/first', 'first')->name('first');
                 Route::get('/up', 'up')->name('up');
                 Route::get('/down', 'down')->name('down');
