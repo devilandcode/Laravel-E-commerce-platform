@@ -13,7 +13,6 @@ use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Services\Adverts\AdvertService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
