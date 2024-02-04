@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -31,7 +32,7 @@ class Handler extends ExceptionHandler
         $this->renderable(function(\DomainException $e, Request $request) {
            if ($request->expectsJson()) {
                return response()->json([
-                   'message' => $exception->getMessage(),
+                   'message' => $e->getMessage(),
                ], Response::HTTP_BAD_REQUEST);
            }
         });

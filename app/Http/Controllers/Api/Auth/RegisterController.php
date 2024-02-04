@@ -16,6 +16,17 @@ class RegisterController extends Controller
     {
     }
 
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     tags={"Profile"},
+     *     @OA\Parameter(name="body", in="body", required=true, @OA\Schema(ref="#/definitions/RegisterRequest")),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Success response",
+     *     )
+     * )
+     */
     public function register(RegisterRequest $request)
     {
         $this->service->register($request);

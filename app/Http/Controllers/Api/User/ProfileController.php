@@ -15,11 +15,35 @@ class ProfileController extends Controller
     {
     }
 
+    /**
+     * @OA\Get(
+     *     path="/user",
+     *     tags={"Profile"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\Schema(ref="#/definitions/Profile"),
+     *     ),
+     *     security={{"Bearer": {}, "OAuth2": {}}}
+     * )
+     */
     public function show(Request $request)
     {
         return ProfileResource::make($request->user());
     }
 
+    /**
+     * @OA\Put(
+     *     path="/user",
+     *     tags={"Profile"},
+     *     @OA\Parameter(name="body", in="body", required=true, @OA\Schema(ref="#/definitions/ProfileEditRequest")),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *     ),
+     *     security={{"Bearer": {}, "OAuth2": {}}}
+     * )
+     */
     public function update(ProfileEditRequest $request)
     {
         $this->service->edit($request->user()->id, $request);
