@@ -81,7 +81,7 @@ Route::middleware('auth')
         });
 
         Route::controller(BannerController::class)->group(function() {
-
+            base_path();
             Route::get('/','index')->name('index');
             Route::get('/show/{banner}',  'show')->name('show');
             Route::get('/{banner}/edit',  'editForm')->name('edit');
