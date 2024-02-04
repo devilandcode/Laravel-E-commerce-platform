@@ -20,14 +20,12 @@ Route::middleware('auth')
     Route::prefix('profile')->name('profile.')->group(function () {
 
         Route::controller(ProfileController::class)->group(function() {
-
             Route::get('/', 'index')->name('home');
             Route::get('/edit', 'edit')->name('edit');
             Route::put('/update', 'update')->name('update');
         });
 
         Route::controller(PhoneController::class)->group(function() {
-
             Route::post('/phone', 'request')->name('phone.request');
             Route::get('/phone', 'form')->name('phone');
             Route::put('/phone', 'verify')->name('phone.verify');
@@ -42,7 +40,6 @@ Route::middleware('auth')
         Route::get('/', [MyAdvertsController::class, 'index'])->name('index');
 
         Route::controller(CreateController::class)->group(function() {
-
             Route::get('/create', [CreateController::class, 'category'])->name('create');
             Route::get('/create/region/{category}/{region?}', [CreateController::class, 'region'])->name('create.region');
             Route::get('/create/advert/{category}/{region?}', [CreateController::class, 'advert'])->name('create.advert');
@@ -50,7 +47,6 @@ Route::middleware('auth')
         });
 
         Route::controller(ManageController::class,)->group(function() {
-
             Route::get('/{advert}/edit', 'editForm')->name('edit');
             Route::put('/{advert}/edit', 'edit');
             Route::get('/{advert}/photos', 'photosForm')->name('photos');
@@ -73,7 +69,6 @@ Route::middleware('auth')
 
 
         Route::controller(BannerCreateController::class)->group(function() {
-
             Route::get('/create','category')->name('create');
             Route::get('/create/region/{category}/{region?}','region')->name('create.region');
             Route::get('/create/banner/{category}/{region?}','banner')->name('create.banner');
@@ -81,7 +76,6 @@ Route::middleware('auth')
         });
 
         Route::controller(BannerController::class)->group(function() {
-
             Route::get('/','index')->name('index');
             Route::get('/show/{banner}',  'show')->name('show');
             Route::get('/{banner}/edit',  'editForm')->name('edit');
