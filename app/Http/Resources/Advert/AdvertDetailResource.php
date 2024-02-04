@@ -45,8 +45,8 @@ class AdvertDetailResource extends JsonResource
                 'name' => $this->category->name,   /** @phpstan-ignore-line */
             ],
             'region' => $this->region ? [   /** @phpstan-ignore-line */
-                'id' => $this->region->id,   /** @phpstan-ignore-line */
-                'name' => $this->region->name,   /** @phpstan-ignore-line */
+                'id' => $this->region->id,
+                'name' => $this->region->name,
             ] : [],
             'title' => $this->title,   /** @phpstan-ignore-line */
             'content' => $this->content,   /** @phpstan-ignore-line */
@@ -56,13 +56,13 @@ class AdvertDetailResource extends JsonResource
                 'published' => $this->published_at,   /** @phpstan-ignore-line */
                 'expires' => $this->expires_at,   /** @phpstan-ignore-line */
             ],
-            'values' => array_map(function (Attribute $attribute) {   /** @phpstan-ignore-line */
+            'values' => array_map(function (Attribute $attribute) {
                 return [
-                    'name' => $attribute->name,   /** @phpstan-ignore-line */
+                    'name' => $attribute->name,
                     'value' => $this->getValue($attribute->id),   /** @phpstan-ignore-line */
                 ];
             }, $this->category->allAttributes()),   /** @phpstan-ignore-line */
-            'photos' => array_map(function (Photo $photo) {   /** @phpstan-ignore-line */
+            'photos' => array_map(function (Photo $photo) {   
                 return $photo->file;
             }, $this->photos->toArray()),   /** @phpstan-ignore-line */
         ];

@@ -38,8 +38,8 @@ class AdvertListResource extends JsonResource
                 'name' => $this->category->name, /** @phpstan-ignore-line */
             ],
             'region' => $this->region ? [ /** @phpstan-ignore-line */
-                'id' => $this->region->id, /** @phpstan-ignore-line */
-                'name' => $this->region->name, /** @phpstan-ignore-line */
+                'id' => $this->region->id,
+                'name' => $this->region->name,
             ] : [],
             'title' => $this->title,  /** @phpstan-ignore-line */
             'price' => $this->price,  /** @phpstan-ignore-line */
