@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: DashBoard Api
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/: {}
+  /adverts:
+    get:
+      operationId: 533a1fbebde31664b7328a4ed8d841e1
+      responses:
+        "200":
+          description: Success response
+      security:
+      - passport: []
+      tags:
+      - Adverts
+      x-accepts: application/json
+  /adverts/{advertId}:
+    get:
+      operationId: 377309953d83da9bbb7e5ed16451f2c4
+      parameters:
+      - description: ID of advert
+        explode: false
+        in: path
+        name: advertId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Success response
+      security:
+      - passport: []
+      tags:
+      - Adverts
+      x-accepts: application/json
+  /adverts/{advertId}/favorite:
+    delete:
+      operationId: 7de8de179d2b71c0211055ff6d605ee2
+      parameters:
+      - explode: false
+        in: path
+        name: advertId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Success response
+      security:
+      - passport: []
+      tags:
+      - Adverts
+      x-accepts: application/json
+    post:
+      operationId: 33ae79d3d9e246defbb1b5069b53f1f0
+      parameters:
+      - explode: false
+        in: path
+        name: advertId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "201":
+          description: Success response
+      security:
+      - passport: []
+      tags:
+      - Adverts
+      x-accepts: application/json
+  /register:
+    post:
+      operationId: 6526a7845e1078d2ca4047f9dfeb7388
+      parameters:
+      - description: User's name
+        explode: true
+        in: query
+        name: name
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: User's email
+        explode: true
+        in: query
+        name: email
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: User's password
+        explode: true
+        in: query
+        name: password
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "201":
+          description: User registered successfully
+        "422":
+          description: Validation errors
+      tags:
+      - Profile
+      x-accepts: application/json
+  /:
+    get:
+      operationId: cf951e643228746449d03cd83b188980
+      responses:
+        "200":
+          description: API version
+      tags:
+      - Info
+      x-accepts: application/json
+  /user/favorites:
+    get:
+      operationId: a041101c22dbd91b01c75044517175aa
+      responses:
+        "200":
+          description: Success response
+      security:
+      - Bearer: []
+        OAuth2: []
+      tags:
+      - Favorites
+      x-accepts: application/json
+  /user/favorites/{advertId}:
+    delete:
+      operationId: 51b5afa6272e746d07f1e0edb5168c85
+      parameters:
+      - explode: false
+        in: path
+        name: advertId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Success response
+      security:
+      - passport: []
+      tags:
+      - Favorites
+      x-accepts: application/json
+  /user:
+    get:
+      operationId: e8e42fa22aeacc6854b2347f08f9c761
+      responses:
+        "200":
+          description: Success response
+      security:
+      - passport: []
+      tags:
+      - Profile
+      x-accepts: application/json
+    put:
+      operationId: 4d471f45098fecbafcd2f589b41448ec
+      parameters:
+      - description: User's name
+        explode: true
+        in: query
+        name: name
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: User's last name
+        explode: true
+        in: query
+        name: last_name
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: User's phone
+        explode: true
+        in: query
+        name: password
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: Success response
+        "422":
+          description: Validation errors
+      security:
+      - passport: []
+      tags:
+      - Profile
+      x-accepts: application/json
+components:
+  schemas: {}
+
