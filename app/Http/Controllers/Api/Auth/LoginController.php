@@ -25,7 +25,7 @@ class LoginController extends Controller
 
         return $this->respondWithToken($token);
     }
-    
+
     public function me(): JsonResponse
     {
         return response()->json(auth()->user());
