@@ -30,7 +30,6 @@ class AdvertController extends Controller
      *             @OA\Items(ref="#/definitions/AdvertList")
      *         ),
      *     ),
-     *     security={{"Bearer": {}, "OAuth2": {}}}
      * )
      */
     public function index(SearchRequest $request)
@@ -47,19 +46,19 @@ class AdvertController extends Controller
      * @OA\Get(
      *     path="/adverts/{advertId}",
      *     tags={"Adverts"},
-     *     @OA\Parameter(
+     *     @OA\Parameter (
      *         name="advertId",
      *         description="ID of advert",
      *         in="path",
      *         required=true,
-     *         type="integer"
+     *         example=1,
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Success response",
      *         @OA\Schema(ref="#/definitions/AdvertDetail"),
      *     ),
-     *     security={{"Bearer": {}, "OAuth2": {}}}
      * )
      */
     public function show(Advert $advert)
@@ -71,3 +70,64 @@ class AdvertController extends Controller
         return AdvertDetailResource::make($advert);
     }
 }
+
+/**
+ * @OA\Definition(
+ *     definition="AdvertList",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer"),
+ *     @OA\Property(property="user", type="object",
+ *         @OA\Property(property="name", type="string"),
+ *         @OA\Property(property="phone", type="string"),
+ *     ),
+ *     @OA\Property(property="category", type="object",
+ *         @OA\Property(property="id", type="integer"),
+ *         @OA\Property(property="name", type="string"),
+ *     ),
+ *     @OA\Property(property="region", type="object",
+ *         @OA\Property(property="id", type="integer"),
+ *         @OA\Property(property="name", type="string"),
+ *     ),
+ *     @OA\Property(property="title", type="string"),
+ *     @OA\Property(property="price", type="integer"),
+ *     @OA\Property(property="date", type="date"),
+ *     @OA\Property(property="photo", type="string"),
+ * )
+ */
+
+/**
+ * @OA\Definition(
+ *     definition="AdvertDetail",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="user", type="object",
+ *         @OA\Property(property="name", type="string", example="Tom"),
+ *         @OA\Property(property="phone", type="string", example="Tailor"),
+ *     ),
+ *     @OA\Property(property="category", type="object",
+ *         @OA\Property(property="id", type="integer", example=123),
+ *         @OA\Property(property="name", type="string", example="Electronics"),
+ *     ),
+ *     @OA\Property(property="region", type="object",
+ *         @OA\Property(property="id", type="integer", example=14),
+ *         @OA\Property(property="name", type="string", example="Lake Garden"),
+ *     ),
+ *     @OA\Property(property="title", type="string", example=""),
+ *     @OA\Property(property="content", type="string"),
+ *     @OA\Property(property="price", type="integer"),
+ *     @OA\Property(property="address", type="string"),
+ *     @OA\Property(property="date", type="object",
+ *         @OA\Property(property="published", type="date"),
+ *         @OA\Property(property="expires", type="date"),
+ *     ),
+ *     @OA\Property(property="values", type="array", @OA\Items(ref="#/definitions/AdvertValue")),
+ *     @OA\Property(property="photos", type="array", @OA\Items(type="string")),
+ * )
+ *
+ * @OA\Definition(
+ *     definition="AdvertValue",
+ *     type="object",
+ *     @OA\Property(property="name", type="string"),
+ *     @OA\Property(property="value", type="string"),
+ * )
+ */

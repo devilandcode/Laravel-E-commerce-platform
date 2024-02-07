@@ -19,12 +19,11 @@ class FavoriteController extends Controller
      * @OA\Post(
      *     path="/adverts/{advertId}/favorite",
      *     tags={"Adverts"},
-     *     @OA\Parameter(name="advertId", in="path", required=true, type="integer"),
+     *     @OA\Parameter(name="advertId", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(
      *         response=201,
      *         description="Success response",
      *     ),
-     *     security={{"Bearer": {}, "OAuth2": {}}}
      * )
      */
     public function add(Advert $advert)
@@ -36,12 +35,11 @@ class FavoriteController extends Controller
      * @OA\Delete(
      *     path="/adverts/{advertId}/favorite",
      *     tags={"Adverts"},
-     *     @OA\Parameter(name="advertId", in="path", required=true, type="integer"),
+     *     @OA\Parameter(name="advertId", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(
      *         response=204,
      *         description="Success response",
      *     ),
-     *     security={{"Bearer": {}, "OAuth2": {}}}
      * )
      */
 

@@ -19,12 +19,32 @@ class RegisterController extends Controller
     /**
      * @OA\Post(
      *     path="/register",
-     *     tags={"Profile"},
-     *     @OA\Parameter(name="body", in="body", required=true, @OA\Schema(ref="#/definitions/RegisterRequest")),
+     *     summary="Register User",
+     *     tags={"Register"},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             oneOf={
+     *                 @OA\Schema(
+     *                      @OA\Property(property="name", type="string", example="Tom"),
+     *                      @OA\Property(property="email", type="string", example="tom@gmail.com"),
+     *                      @OA\Property(property="password", type="string", example="tom123456"),
+     *                      @OA\Property(property="password_confirmation", type="string", example="tom123456"),
+     *                 ),
+     *             },
+     *         ),
+     *     ),
      *     @OA\Response(
-     *         response=201,
-     *         description="Success response",
-     *     )
+     *         response="201",
+     *         description="User registered successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="success",
+     * 		           type="string",
+     *                 example="success: Check your email and click on the link to verify."
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(response="422", description="Validation errors")
      * )
      */
     public function register(RegisterRequest $request)

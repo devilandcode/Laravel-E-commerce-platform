@@ -62,7 +62,7 @@ class AdvertDetailResource extends JsonResource
                     'value' => $this->getValue($attribute->id),   /** @phpstan-ignore-line */
                 ];
             }, $this->category->allAttributes()),   /** @phpstan-ignore-line */
-            'photos' => array_map(function (Photo $photo) {   
+            'photos' => array_map(function (Photo $photo) {
                 return $photo->file;
             }, $this->photos->toArray()),   /** @phpstan-ignore-line */
         ];

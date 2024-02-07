@@ -1,0 +1,253 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DashBoard Api",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/adverts": {
+            "get": {
+                "tags": [
+                    "Adverts"
+                ],
+                "operationId": "533a1fbebde31664b7328a4ed8d841e1",
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/adverts/{advertId}": {
+            "get": {
+                "tags": [
+                    "Adverts"
+                ],
+                "operationId": "377309953d83da9bbb7e5ed16451f2c4",
+                "parameters": [
+                    {
+                        "name": "advertId",
+                        "in": "path",
+                        "description": "ID of advert",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/adverts/{advertId}/favorite": {
+            "post": {
+                "tags": [
+                    "Adverts"
+                ],
+                "operationId": "33ae79d3d9e246defbb1b5069b53f1f0",
+                "parameters": [
+                    {
+                        "name": "advertId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success response"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Adverts"
+                ],
+                "operationId": "7de8de179d2b71c0211055ff6d605ee2",
+                "parameters": [
+                    {
+                        "name": "advertId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "operationId": "6526a7845e1078d2ca4047f9dfeb7388",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User's name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "tags": [
+                    "Info"
+                ],
+                "operationId": "cf951e643228746449d03cd83b188980",
+                "responses": {
+                    "200": {
+                        "description": "API version"
+                    }
+                }
+            }
+        },
+        "/user/favorites": {
+            "get": {
+                "tags": [
+                    "Favorites"
+                ],
+                "operationId": "a041101c22dbd91b01c75044517175aa",
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/user/favorites/{advertId}": {
+            "delete": {
+                "tags": [
+                    "Favorites"
+                ],
+                "operationId": "51b5afa6272e746d07f1e0edb5168c85",
+                "parameters": [
+                    {
+                        "name": "advertId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "operationId": "e8e42fa22aeacc6854b2347f08f9c761",
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "operationId": "4d471f45098fecbafcd2f589b41448ec",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User's name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "User's last name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's phone",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    }
+}

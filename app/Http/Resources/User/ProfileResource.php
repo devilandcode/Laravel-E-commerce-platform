@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +16,7 @@ class ProfileResource extends JsonResource
      * @property string $phone
      * @property bool $phone_verified
      */
-    public function toArray($request): array
+    public function toArray(User|Request $request): array
     {
         return [
             'id' => $this->id,   /** @phpstan-ignore-line */

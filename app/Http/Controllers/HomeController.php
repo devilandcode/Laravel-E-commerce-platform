@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Adverts\Category;
 use App\Models\Region;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {

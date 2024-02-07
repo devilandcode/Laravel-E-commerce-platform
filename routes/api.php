@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Adverts\FavoriteController;
 use App\Http\Controllers\Api\Advert\AdvertController;
+use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\User\ProfileController;
@@ -20,12 +21,38 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::middleware('api')
+    ->prefix('auth')
+    ->group(function() {
+
+    Route::controller(LoginController::class)->group(function () {
+        Route::post('login', 'login');
+//        Route::get('user', 'userProfile');
+        Route::post('logout', 'logout');
+        Route::post('refresh', 'refresh');
+        Route::post('me', 'me');
+    });
+
+    Route::prefix('user')
+        ->name('user.')->group(function () {
+
+            Route::controller(ProfileController::class)->group(function () {
+                Route::get('/', 'show');
+                Route::put('/', 'update');
+            });
+
+        });
+
+});
+
+
+
 Route::name('api.')->group(function() {
     Route::get('/', [HomeController::class, 'home']);
     Route::post('/register', [RegisterController::class, 'register']);
 
-    Route::middleware('auth:api')->group(function() {
-        Route::resource('adverts', AdvertController::class)
+    Route::middleware('api')->group(function() {
+        Route::resource('/adverts', AdvertController::class)
             ->only('index', 'show');
 
         Route::controller(FavoriteController::class)->group(function() {

@@ -20,14 +20,3 @@ class RegisterRequest extends FormRequest
         ];
     }
 }
-
-/**
- * @OA\Definition(
- *     definition="RegisterRequest",
- *     type="object",
- *     @OA\Property(property="name", type="string"),
- *     @OA\Property(property="email", type="string"),
- *     @OA\Property(property="password", type="string"),
- *     @OA\Property(property="password_confirmation", type="string"),
- * )
- */
